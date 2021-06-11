@@ -1649,7 +1649,7 @@ canvas {
   animation: to_show 4s;
 }
 
-/* 全局固定设置按钮 */
+/* 全局固定设置按钮
 #rightside {
   position: fixed;
   right: -38px;
@@ -1684,7 +1684,7 @@ canvas {
   -o-animation: turn_around 2s linear infinite;
   -ms-animation: turn_around 2s linear infinite;
   animation: turn_around 2s linear infinite;
-}
+} */
 
 @-moz-keyframes turn_around {
   from {
