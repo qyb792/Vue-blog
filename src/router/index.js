@@ -1,20 +1,19 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Layout from '@/components/layout'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-
-    component: () => import('../views/About.vue')
+    component: Layout,
+    children: [{
+      path: '/',
+      name: 'home',
+      component: () => import('@/views/Home'),
+      meta: { title: '首页' }
+    }]
   }
 ]
 
