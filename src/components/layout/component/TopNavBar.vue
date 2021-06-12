@@ -19,16 +19,16 @@
     <span class="pull_right menus">
       <div class="menus_items">
         <div class="menus_item">
-          <a class="site-page" href="./index.html">
+          <router-link to="/" class="site-page">
             <i class="iconfont iconzhuye " />
             <span> 首页</span>
-          </a>
+          </router-link>
         </div>
         <div class="menus_item">
-          <a class="site-page" href="./index.html">
+          <router-link to="/archive" class="site-page">
             <i class="iconfont iconguidang" />
             <span> 归档</span>
-          </a>
+          </router-link>
         </div>
         <div class="menus_item">
           <a class="site-page" href="./index.html">

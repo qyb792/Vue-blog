@@ -11,9 +11,16 @@ const routes = [
     children: [{
       path: '/',
       name: 'home',
-      component: () => import('@/views/Home'),
+      component: () => import('@/views/home'),
       meta: { title: '首页' }
-    }]
+    },
+    {
+      path: '/archive',
+      name: 'archive',
+      component: () => import('@/views/archive'),
+      meta: { title: '归档页面' }
+    }
+    ]
   }
 ]
 

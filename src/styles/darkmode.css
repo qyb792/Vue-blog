@@ -449,3 +449,11 @@
   box-shadow: -0.25rem 0 0.25rem #121212;
 }
 
+/* [data-theme="dark"]  #github_container {
+  color: #fff !important;
+} */
+
+[data-theme="dark"] .el-pagination button{
+  background-color: #000 !important;
+}
+

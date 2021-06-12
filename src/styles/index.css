@@ -482,12 +482,7 @@ hr:hover:before {
 
 
 
-/* 首页头图 */
-.full-page {
-  height: 100vh;
-  background-image: url('../assets/img/bg.jpg');
-  background-attachment: fixed;
-}
+
 
 #nav {
   position: relative;
@@ -991,6 +986,7 @@ hr:hover:before {
 }
 
 .post-item {
+  margin: 0 0 20px;
   display: flex;
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
@@ -1563,34 +1559,7 @@ main .aside-content .avatar-img:hover {
   float: right;
 }
 
-#footer {
-  position: relative;
-  background: #49b1f5;
-  background-attachment: local;
-  background-position: bottom;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-}
 
-#footer a {
-  color: #eee;
-}
-
-#footer a:hover {
-  color: #49b1f5;
-}
-
-#footer .footer-separator {
-  margin: 0 4px;
-}
-
-#footer .footer-wrap {
-  position: relative;
-  padding: 40px 20px;
-  color: #eee;
-  text-align: center;
-}
 
 @-moz-keyframes to_show {
   0% {
