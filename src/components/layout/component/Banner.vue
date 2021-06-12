@@ -12,9 +12,7 @@
     </div>
     <!-- 下拉按钮 -->
     <div id="scroll_down" @click="scrollDown">
-      <v-icon color="#fff" class="scroll-down-effects">
-        mdi-chevron-down
-      </v-icon>
+      <i class="el-icon-arrow-down" />
     </div>
 
   </div>

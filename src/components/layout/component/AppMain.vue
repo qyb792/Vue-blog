@@ -35,7 +35,7 @@
 
           <div class="bookmarkwai is-center">
             <a class="bookmark" @click="tip = true">
-              <v-icon color="#fff" size="18" class="mr-1">mdi-bookmark</v-icon>
+              <i class="el-icon-collection-tag" />
               <span style="padding-left: 10px;">加入书签</span>
             </a>
           </div>
@@ -59,7 +59,7 @@
       <div class="card-widget">
         <div class="card-content">
           <div class="item-headline">
-            <v-icon class="card-announcement-animation" size="18">mdi-bell</v-icon>
+            <i class="el-icon-message-solid" />
             <span>公告</span>
           </div>
           <div class="announcement_content">
@@ -128,7 +128,7 @@
       <div class="card-widget card-webinfo">
         <div class="card-content">
           <div class="item-headline">
-            <v-icon size="18">mdi-chart-line</v-icon>
+            <i class="el-icon-finished" />
             <span>网站资讯</span>
           </div>
           <div class="webinfo">

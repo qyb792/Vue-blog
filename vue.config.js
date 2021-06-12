@@ -4,9 +4,6 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 module.exports = {
-  transpileDependencies: [
-    'vuetify'
-  ],
   devServer: {
     port: 9989,
     open: true,
