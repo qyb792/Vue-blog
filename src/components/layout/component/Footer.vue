@@ -1,5 +1,5 @@
 <template>
-  <footer id="footer" data-type="color">
+  <footer id="footer" class="ismessage" data-type="color">
     <div class="footer-wrap">
       <div class="copyright">©2020 - {{ new Date().getFullYear() }} By zytqyb</div>
       <div class="framework-info">

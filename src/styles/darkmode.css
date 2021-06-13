@@ -20,7 +20,7 @@
 [data-theme="dark"] #nav,
 [data-theme="dark"] .layout_post > #post,
 [data-theme="dark"] .layout_page > div:first-child:not(.recent-posts) {
-  background-color: #121212;
+  background-color: #121212 !important;
 }
 [data-theme="dark"] #sidebar {
   background: #121212;
@@ -457,3 +457,7 @@
   background-color: #000 !important;
 }
 
+
+[data-theme="dark"] .markdown-body pre{
+  background-color: #171717 !important;
+}

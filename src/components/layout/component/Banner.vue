@@ -2,7 +2,7 @@
   <div
     id="nav"
     class="full-page"
-    :class="{ 'article-banner': isArticleBanner }"
+    :class="{ 'article-banner': isArticleBanner, 'is-shadow': isArticleBanner }"
     :style="{backgroundImage: 'url(' + bannerImg + ')' }"
   >
     <!-- 头图中间文字 -->
@@ -20,25 +20,42 @@
     <div v-if="!isArticleBanner" id="scroll_down" @click="scrollDown">
       <i class="el-icon-arrow-down scroll-down-effects" />
     </div>
+
+    <div>
+      <slot name="articleTitle" />
+    </div>
   </div>
 </template>
 
 <script>
 export default {
+
   props: {
     bannerTitle: {
       type: String,
-      required: true
+      default: ''
     },
     bannerImg: {
       type: String,
       required: true
+    },
+    article: {
+      type: Object,
+      default: () => {
+        return {}
+      }
     }
+
   },
   computed: {
+
     isArticleBanner() {
       return this.bannerTitle !== '邱同学のblog'
     }
+  },
+
+  created() {
+    // console.log(this.articleInfo)
   },
   methods: {
     // 初始化
@@ -64,4 +81,16 @@ export default {
 .article-banner {
   height: 400px !important;
 }
+
+.is-shadow:before {
+   position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.5);
+    content: '';
+}
+
 </style>

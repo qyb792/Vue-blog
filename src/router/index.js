@@ -19,6 +19,21 @@ const routes = [
       name: 'archive',
       component: () => import('@/views/archive'),
       meta: { title: '归档页面' }
+    },
+    {
+      path: '/article/*',
+      name: 'article',
+      component: () => import('@/views/article')
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: () => import('@/views/about')
+    },
+    {
+      path: '/message',
+      name: 'message',
+      component: () => import('@/views/message')
     }
     ]
   }

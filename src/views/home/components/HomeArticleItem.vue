@@ -2,15 +2,15 @@
   <div class="post-item">
     <!-- 首页文章展示头图 -->
     <div class="item-img">
-      <a href="./article.html">
+      <router-link :to="'/article/'+ article.articleId">
         <img class="img1" :src="article.articleCover" alt="文章头图">
-      </a>
+      </router-link>
     </div>
 
     <div class="recent-post-information">
-      <a class="article-title" href="./article.html">
+      <router-link class="article-title" :to="'/article/'+ article.articleId">
         {{ article.articleTitle }}
-      </a>
+      </router-link>
       <div class="article-information">
         <time class="article-date" :title="'发表于' + article.createTime">
           <i class="fa fa-calendar" />

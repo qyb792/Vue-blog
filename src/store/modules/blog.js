@@ -3,11 +3,24 @@ const state = {
   blogInfo: {},
   newBlog: [],
   bannerTitle: '邱同学のblog',
-  bannerImg: 'https://cdn.jsdelivr.net/gh/zytqyb/Image-hosting@master/hexo_blog_img/bg.4ynvqn49q400.jpg'
+  bannerImg: 'https://cdn.jsdelivr.net/gh/zytqyb/Image-hosting@master/hexo_blog_img/bg.4ynvqn49q400.jpg',
+  userId: null,
+  avatar: null,
+  nickname: null
 }
 
 // 修改状态
 const mutations = {
+  login(state, user) {
+    state.userId = user.userId
+    state.avatar = user.avatar
+    state.nickname = user.nickname
+  },
+  logout(state) {
+    state.userId = null
+    state.avatar = null
+    state.nickname = null
+  },
   setBlogInfo(state, result) {
     // 更新一个对象
     state.blogInfo = result // 这样是响应式
@@ -24,6 +37,7 @@ const mutations = {
   setBannerImg(state, result) {
     state.bannerImg = result
   }
+
 }
 
 // 执行异步
@@ -48,6 +62,12 @@ const actions = {
   // 传入当前页面的标题
   getBannerImg(context, result) {
     context.commit('setBannerImg', result)
+  },
+  login(context, user) {
+    context.commit('login', user)
+  },
+  logout(context) {
+    context.commit('logout')
   }
 
 }
