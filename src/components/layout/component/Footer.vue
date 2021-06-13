@@ -9,7 +9,7 @@
             target="_blank"
             href="https://cn.vuejs.org/"
           ><img
-            src="https://img.shields.io/badge/Frame-vue-blue?style=flat&logo=vue"
+            src="https://img.shields.io/badge/Frame-Vue-blue?style=flat&logo=Vue"
             title="博客框架为 Vue"
             alt="Vue"
           ></a>
