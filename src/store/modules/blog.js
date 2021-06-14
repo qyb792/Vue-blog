@@ -2,8 +2,7 @@ import { getBlogInfo, getArticleList } from '@/api/home'
 const state = {
   blogInfo: {},
   newBlog: [],
-  bannerTitle: '邱同学のblog',
-  bannerImg: 'https://cdn.jsdelivr.net/gh/zytqyb/Image-hosting@master/hexo_blog_img/bg.4ynvqn49q400.jpg',
+
   userId: null,
   avatar: null,
   nickname: null
@@ -30,12 +29,6 @@ const mutations = {
   // 最新文章
   setNewBlog(state, result) {
     state.newBlog = result
-  },
-  setBannerTitle(state, result) {
-    state.bannerTitle = result
-  },
-  setBannerImg(state, result) {
-    state.bannerImg = result
   }
 
 }
@@ -55,14 +48,7 @@ const actions = {
     // console.log(newBlog)
     context.commit('setNewBlog', newBlog)
   },
-  // 传入当前页面的标题
-  getBannerTitle(context, result) {
-    context.commit('setBannerTitle', result)
-  },
-  // 传入当前页面的标题
-  getBannerImg(context, result) {
-    context.commit('setBannerImg', result)
-  },
+
   login(context, user) {
     context.commit('login', user)
   },

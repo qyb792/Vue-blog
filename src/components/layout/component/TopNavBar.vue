@@ -31,22 +31,22 @@
           </router-link>
         </div>
         <div class="menus_item">
-          <a class="site-page" href="./index.html">
+          <router-link class="site-page" to="/category">
             <i class="iconfont iconfenlei" />
             <span> 分类</span>
-          </a>
+          </router-link>
         </div>
         <div class="menus_item">
-          <a class="site-page" href="./index.html">
+          <router-link class="site-page" to="/tags">
             <i class="iconfont iconbiaoqian" />
             <span> 标签</span>
-          </a>
+          </router-link>
         </div>
         <div class="menus_item">
-          <a class="site-page" href="./aboutBlog.html">
+          <router-link class="site-page" to="/link">
             <i class="iconfont iconlianjie" />
             <span> 友链</span>
-          </a>
+          </router-link>
         </div>
         <div class="menus_item">
           <router-link to="/about" class="site-page">

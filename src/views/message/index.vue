@@ -11,12 +11,13 @@
             placeholder="说点什么吧"
             @click="show = true"
           >
-          <el-button
+          <button
             v-show="show"
-            type="primary"
-            class="animated bounceInLeft"
+            class="ml-3 animate__animated animate__backInLeft"
             @click="addToList"
-          >发送</el-button>
+          >
+            发送
+          </button>
         </div>
       </div>
       <!-- 弹幕列表 -->
@@ -126,21 +127,25 @@ export default {
 }
 .message-input-wrapper input {
   outline: none;
-  width: 70%;
+  width: 252px;
   border-radius: 20px;
-  height: 75%;
+  height: 40px;
   padding: 0 1.25rem;
-  color: #000;
+  color: #fff;
   border: #fff 1px solid;
+  background: transparent;
 }
 .message-input-wrapper input::-webkit-input-placeholder {
   color: #eeee;
 }
 .message-input-wrapper button {
-  outline: none;
   border-radius: 20px;
-  height: 75%;
+  width: 70px;
+  height: 40px;
   margin-left: 20px;
+  color: #fff;
+  border: 1px #fff solid;
+  background: transparent;
 }
 .barrage-container {
   position: absolute;

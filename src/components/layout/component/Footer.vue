@@ -13,15 +13,15 @@
             title="博客框架为 Vue"
             alt="Vue"
           ></a>
-          <!-- <a
+          <a
             style="margin-inline: 5px"
             target="_blank"
             href="https://butterfly.js.org/"
           ><img
             src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender"
-            title="主题采用 Butterfly"
+            title="改博客主题魔改自Butterfly"
             alt="Butterfly"
-          ></a> -->
+          ></a>
           <a
             style="margin-inline: 5px"
             target="_blank"

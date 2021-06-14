@@ -115,7 +115,7 @@ export default {
       const that = this
       this.articleId = this.$route.path.split('/article/')[1]
       const result = await getArticles(this.articleId)
-
+      document.title = '邱同学的小破站 - ' + result.data.articleTitle
       this.img = result.data.articleCover
       this.article = result.data
       // console.log(result.data)
@@ -479,11 +479,7 @@ pre.hljs {
 <style scoped>
 .highlight-tools {
     position: relative;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: box;
+
     display: flex;
     -webkit-box-align: center;
     -moz-box-align: center;

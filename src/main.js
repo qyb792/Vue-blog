@@ -37,9 +37,18 @@ new Vue({
   render: (h) => h(App)
 }).$mount('#app')
 
+// 路由的前置守卫
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = '邱同学的小破站 - ' + to.meta.title
+  }
+  next()
+})
+
 router.afterEach(() => {
   window.scrollTo({
     top: 0,
     behavior: 'instant'
   })
 })
+

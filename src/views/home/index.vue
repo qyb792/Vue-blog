@@ -2,8 +2,8 @@
   <div>
     <!-- banner -->
     <banner
-      :banner-title="this.$store.getters.bannerTitle"
-      :banner-img="this.$store.getters.bannerImg"
+      :banner-title="'邱同学のblog'"
+      :banner-img="'https://cdn.jsdelivr.net/gh/zytqyb/Image-hosting@master/hexo_blog_img/bg.4ynvqn49q400.jpg'"
     />
     <main id="content-inner" class="layout_page">
       <!-- 文章展示模块外部容器 -->
@@ -51,11 +51,6 @@ export default {
   }),
   created() {
     this.getArticleList()
-    this.$store.dispatch(
-      'blog/getBannerImg',
-      'https://cdn.jsdelivr.net/gh/zytqyb/Image-hosting@master/hexo_blog_img/bg.4ynvqn49q400.jpg'
-    )
-    this.$store.dispatch('blog/getBannerTitle', '邱同学のblog')
   },
   methods: {
     async getArticleList() {

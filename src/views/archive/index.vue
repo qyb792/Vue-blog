@@ -2,8 +2,8 @@
   <div>
     <!-- banner -->
     <banner
-      :banner-title="this.$store.getters.bannerTitle"
-      :banner-img="this.$store.getters.bannerImg"
+      :banner-title="'归档'"
+      :banner-img="'https://cdn.jsdelivr.net/gh/zytqyb/Image-hosting@master/hexo_blog_img/bg1.6cejq9rfsb40.jpg'"
     />
     <main id="content-inner" class="layout_page">
       <div id="archive">
@@ -66,11 +66,6 @@ export default {
   }),
   created() {
     this.getArchives()
-    this.$store.dispatch(
-      'blog/getBannerImg',
-      'https://cdn.jsdelivr.net/gh/zytqyb/Image-hosting@master/hexo_blog_img/bg1.6cejq9rfsb40.jpg'
-    )
-    this.$store.dispatch('blog/getBannerTitle', '归档')
   },
   methods: {
     async getArchives() {
@@ -144,11 +139,6 @@ export default {
 
 .article-sort-item {
   position: relative;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: box;
   display: flex;
   -webkit-box-align: center;
   -moz-box-align: center;

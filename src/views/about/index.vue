@@ -2,8 +2,8 @@
   <div>
     <!-- banner -->
     <banner
-      :banner-title="this.$store.getters.bannerTitle"
-      :banner-img="this.$store.getters.bannerImg"
+      :banner-title="'关于我'"
+      :banner-img="'https://cdn.jsdelivr.net/gh/zytqyb/Image-hosting@master/hexo_blog_img/bg3.5swlj7vt1gs0.jpg'"
     />
     <!-- 关于我内容 -->
     <main id="content-inner" class="layout_page">
@@ -26,11 +26,6 @@ export default {
   },
   created() {
     this.getAboutContent()
-    this.$store.dispatch(
-      'blog/getBannerImg',
-      'https://cdn.jsdelivr.net/gh/zytqyb/Image-hosting@master/hexo_blog_img/bg3.5swlj7vt1gs0.jpg'
-    )
-    this.$store.dispatch('blog/getBannerTitle', '关于我')
   },
   methods: {
     async getAboutContent() {

@@ -16,11 +16,11 @@
             更新于 {{ articleInfo.article.updateTime | date }}
           </span>
         </time>
-        <span class="post-meta__categories">
+        <!-- <span class="post-meta__categories">
           <span class="post-meta__separator">|</span>
           <i class="fa fa-inbox post-meta__icon" />
           <a href="javascript:;" class="post-meta__categories"> Javaweb</a>
-        </span>
+        </span> -->
       </div>
       <div class="meta-secondline">
         <span class="post-meta-wordcount">
