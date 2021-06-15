@@ -15,12 +15,15 @@
             :key="item.id"
             class="article-sort-item"
           >
-            <a class="article-sort-item-img" href="#">
+            <router-link
+              class="article-sort-item-img"
+              :to="'/article/' + item.id"
+            >
               <img
                 src="https://cdn.jsdelivr.net/gh/zytqyb/Image-hosting@master/hexo_blog_img/y8qpqk.3hdi9olrkc80.jpg"
                 alt=""
               >
-            </a>
+            </router-link>
             <div class="article-sort-item-info">
               <div class="article-sort-item-time">
                 <i class="fa fa-calendar" />
@@ -32,12 +35,15 @@
                 </time>
               </div>
 
-              <a
+              <router-link
                 class="article-sort-item-title"
                 href="#"
                 title="Vue学习笔记"
                 data-pjax-state=""
-              >{{ item.articleTitle }}</a>
+                :to="'/article/' + item.id"
+              >
+                {{ item.articleTitle }}
+              </router-link>
             </div>
           </div>
         </div>
@@ -85,9 +91,9 @@ export default {
 
 <style lang="scss" scoped>
 .el-pagination {
-	display: flex;
-	justify-content: center;
-	margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .article-sort-title {

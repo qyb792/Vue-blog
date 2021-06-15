@@ -31,6 +31,12 @@ Vue.filter('date', function(value) {
 import hevueImgPreview from 'hevue-img-preview'
 Vue.use(hevueImgPreview)
 
+import APlayer from '@moefe/vue-aplayer'
+Vue.use(APlayer, {
+  defaultCover: 'https://github.com/u3u.png',
+  productionTip: true
+})
+
 new Vue({
   router,
   store,
