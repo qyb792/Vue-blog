@@ -19,8 +19,7 @@
         <span class="article-meta">
           <span class="separator"> |</span>
           <i class="fa fa-inbox article-meta--icon" />
-
-          <a class="categories" href="#">{{ article.categoryName }}</a>
+          <a class="categories" href="javascript:;">{{ article.categoryName }}</a>
         </span>
         <div class="content">
           {{ article.articleContent }}
