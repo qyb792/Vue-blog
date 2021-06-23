@@ -9,7 +9,7 @@
     <back-top />
     <!-- 网站底部 -->
     <Footer />
-    <!-- <aplayer /> -->
+    <aplayer />
     <el-dialog title="登录" :visible.sync="isLoginDialog" width="40%" center>
       <el-form ref="form" :label-position="'top'" label-width="80px">
         <el-form-item label="账号">
@@ -40,7 +40,7 @@ import TopNavBar from '@/components/layout/component/TopNavBar'
 import AppMain from '@/components/layout/component/AppMain'
 import BackTop from '@/components/BackTop'
 import Footer from '@/components/layout/component/Footer'
-// import aplayer from '@/components/aplayer'
+import aplayer from '@/components/aplayer'
 
 import { login } from '@/api/user'
 export default {
@@ -48,8 +48,8 @@ export default {
     TopNavBar,
     AppMain,
     BackTop,
-    Footer
-    // aplayer
+    Footer,
+    aplayer
   },
   data() {
     return {
