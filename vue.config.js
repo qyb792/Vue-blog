@@ -4,12 +4,13 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 module.exports = {
+  // lintOnSave: false,
   devServer: {
     port: 9989,
     open: true,
     proxy: {
       '/api': {
-        target: 'http://81.70.192.127:8090',
+        target: 'http://124.221.154.248:8090',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''

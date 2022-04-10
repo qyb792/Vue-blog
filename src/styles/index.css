@@ -1,38 +1,37 @@
-html {
-  height: 100%;
-  font-size: 20px;
-}
 body {
-  position: relative;
-  min-height: 100%;
-  background: #fff;
-  color: #4c4948;
-  font-size: 14px;
-  font-family: Lato, Helvetica Neue For Number, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, PingFang SC, Hiragino Sans GB, 'Microsoft YaHei',
-    Helvetica Neue, Helvetica, Arial, sans-serif;
-  line-height: 2;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  /* cursor: url(https://www.bsat1314.cn//usr/themes/handsome/normal.cur), default; */
+  cursor: url(https://cdn.jsdelivr.net/gh/sviptzk/HexoStaticFile@latest/Hexo/img/default.cur),
+    default;
+  margin: 0;
 }
 
-body,
-html {
-  scroll-behavior: smooth;
+a,
+button,
+img {
+  cursor: url(https://cdn.jsdelivr.net/gh/sviptzk/HexoStaticFile@latest/Hexo/img/pointer.cur),
+    default;
 }
 
-/* 修改选中文字的背景色 */
-*::selection {
+* {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue',
+    Lato, Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif !important;
+}
+
+ul {
+  padding: 0 !important;
+}
+
+修改选中文字的背景色 *::selection {
   background: #00c4b6;
   color: #f7f7f7;
 }
 
-/*定义滚动条样式（高宽及背景）*/
+/* 定义滚动条样式（高宽及背景） */
 *::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
-/*定义滚动条轨道（凹槽）样式*/
+/* 定义滚动条轨道（凹槽）样式 */
 *::-webkit-scrollbar-track {
   background-color: transparent;
 }
@@ -40,11 +39,6 @@ html {
 /*定义滑块 样式*/
 *::-webkit-scrollbar-thumb {
   background: #49b1f5;
-}
-
-* {
-  margin: 0;
-  padding: 0;
 }
 
 * {
@@ -63,12 +57,7 @@ a {
   -ms-transition: all 0.2s;
   transition: all 0.2s;
   overflow-wrap: break-word;
-  /* cursor: url(https://www.bsat1314.cn//usr/themes/handsome/link.cur), pointer !important; */
 }
-
-/* button {
-  cursor: url(https://www.bsat1314.cn//usr/themes/handsome/link.cur), pointer !important;
-} */
 
 a:hover {
   color: #49b1f5;
@@ -145,7 +134,8 @@ a:hover {
     background: rgba(255, 255, 255, 0.8);
     -webkit-box-shadow: 0 5px 6px -5px rgba(133, 133, 133, 0.6);
     box-shadow: 0 5px 6px -5px rgba(133, 133, 133, 0.6);
-    -webkit-transition: -webkit-transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    -webkit-transition: -webkit-transform 0.2s ease-in-out,
+      opacity 0.2s ease-in-out;
     -moz-transition: -moz-transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
     -o-transition: -o-transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
     -ms-transition: -ms-transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
@@ -176,10 +166,6 @@ a:hover {
 
   .card-widget {
     margin-left: 15px !important;
-  }
-
-  #aside_content .card-widget {
-    margin-left: 15px;
   }
 
   .layout_page {
@@ -356,24 +342,44 @@ img {
   display: flex;
 }
 
-#mobile-sidebar #mobile-sidebar-menus .mobile_post_data > div .mobile_data_item {
+#mobile-sidebar
+  #mobile-sidebar-menus
+  .mobile_post_data
+  > div
+  .mobile_data_item {
   flex: 1;
 }
 
-#mobile-sidebar #mobile-sidebar-menus .mobile_post_data .mobile_data_item .mobile_data_link .headline {
+#mobile-sidebar
+  #mobile-sidebar-menus
+  .mobile_post_data
+  .mobile_data_item
+  .mobile_data_link
+  .headline {
   display: block;
   color: #4c4948;
   font-size: 14px;
 }
 
-#mobile-sidebar #mobile-sidebar-menus .mobile_post_data .mobile_data_item .mobile_data_link > a > div {
+#mobile-sidebar
+  #mobile-sidebar-menus
+  .mobile_post_data
+  .mobile_data_item
+  .mobile_data_link
+  > a
+  > div {
   overflow: hidden;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-#mobile-sidebar #mobile-sidebar-menus .mobile_post_data .mobile_data_item .mobile_data_link .length_num {
+#mobile-sidebar
+  #mobile-sidebar-menus
+  .mobile_post_data
+  .mobile_data_item
+  .mobile_data_link
+  .length_num {
   color: #000;
   font-size: 18px;
 }
@@ -682,7 +688,7 @@ hr:hover:before {
 .full-page #scroll_down .scroll-down-effects {
   position: relative;
   width: 100%;
-  font-size: 30px;
+  font-size: 1.5rem;
   color: #eee;
   text-align: center;
   text-shadow: 0.1rem 0.1rem 0.2rem rgba(0, 0, 0, 0.15);
@@ -761,22 +767,6 @@ hr:hover:before {
   width: 100%;
 }
 
-/* 顶部导航栏的css样式 */
-/* 默认顶部导航栏的css样式 */
-#page-header {
-  position: absolute;
-  top: 0;
-  z-index: 99;
-  padding: 10px 36px;
-  width: 100%;
-  height: 58px;
-  border: none;
-  font-size: 18px;
-  opacity: 0;
-  -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
-  filter: alpha(opacity=0);
-}
-
 /* 到达某个位置后上滑后顶部导航栏的css样式 */
 #page-header.visible {
   -webkit-transition: all 0.5s;
@@ -798,7 +788,8 @@ hr:hover:before {
   background: rgba(255, 255, 255, 0.8);
   -webkit-box-shadow: 0 5px 6px -5px rgba(133, 133, 133, 0.6);
   box-shadow: 0 5px 6px -5px rgba(133, 133, 133, 0.6);
-  -webkit-transition: -webkit-transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  -webkit-transition: -webkit-transform 0.2s ease-in-out,
+    opacity 0.2s ease-in-out;
   -moz-transition: -moz-transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
   -o-transition: -o-transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
   -ms-transition: -ms-transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
@@ -949,6 +940,7 @@ hr:hover:before {
 
 .recent-posts {
   width: 75%;
+  padding: 7.5px;
 }
 
 .post-item {
@@ -1022,22 +1014,6 @@ hr:hover:before {
   width: 55%;
 }
 
-.article-title {
-  overflow: hidden;
-  color: #4c4948;
-  font-size: 24px;
-  line-height: 1.4;
-  -webkit-transition: all 0.2s ease-in-out;
-  -moz-transition: all 0.2s ease-in-out;
-  -o-transition: all 0.2s ease-in-out;
-  -ms-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
-}
-
-.article-title:hover {
-  color: #49b1f5 !important;
-}
-
 /* 文章发布时间 */
 .recent-post-information .article-date {
   color: #858585;
@@ -1049,15 +1025,9 @@ hr:hover:before {
   margin-right: 4px;
 }
 
-/* 文章标签外部容器 */
-.article-meta {
-  color: #858585;
-}
 
-/* 分隔符 */
-.separator {
-  margin-right: 6px;
-}
+
+
 
 .article-meta .categories {
   color: #858585;
@@ -1066,13 +1036,6 @@ hr:hover:before {
 .article-meta .categories:hover {
   color: #49b1f5 !important;
   text-decoration: underline;
-}
-
-.recent-post-information .content {
-  overflow: hidden;
-  margin-top: 6px;
-  height: 85px;
-  color: rgb(76, 73, 72);
 }
 
 /* 分页 */
@@ -1123,6 +1086,7 @@ hr:hover:before {
 
 main .aside-content {
   width: 25%;
+  padding: 7.5px;
 }
 
 main .aside-content .card-widget {
@@ -1142,10 +1106,6 @@ main .aside-content .card-widget {
 main .aside-content .card-widget:hover {
   -webkit-box-shadow: 0 4px 12px 12px rgba(7, 17, 27, 0.15);
   box-shadow: 0 4px 12px 12px rgba(7, 17, 27, 0.15);
-}
-
-main .aside-content .card-widget .card-content {
-  padding: 20px 24px;
 }
 
 main .aside-content .avatar-img {
@@ -1174,34 +1134,6 @@ main .aside-content .avatar-img:hover {
 
 .is-center {
   text-align: center;
-}
-
-.aside-content .author-info-name {
-  font-weight: 500;
-  font-size: 22px;
-}
-
-.aside-content .card-info-data {
-  padding: 14px 0;
-  display: flex;
-}
-
-.aside-content .card-info-data .card-info-data-item {
-  flex: 1;
-}
-
-.card-info-data-item .headline {
-  display: block;
-  overflow: hidden;
-  color: #4c4948;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 14px;
-}
-
-.length-num {
-  color: #000;
-  font-size: 20px;
 }
 
 .bookmarkwai .bookmark {
@@ -1261,49 +1193,6 @@ main .aside-content .avatar-img:hover {
   -o-transform: scaleX(1);
   -ms-transform: scaleX(1);
   transform: scaleX(1);
-}
-
-.card-info-social-icons {
-  margin: 6px 0 -12px;
-}
-
-.card-info-social-icons a:hover {
-  color: #4c4948;
-}
-
-/* github等图标样式 */
-.social-icon {
-  margin: 0 10px;
-  color: #4c4948;
-  font-size: 1rem;
-}
-
-.social-icon i {
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  -ms-transition: all 0.3s;
-  transition: all 0.3s;
-}
-.social-icon i:hover {
-  -webkit-transform: rotateZ(540deg);
-  -moz-transform: rotateZ(540deg);
-  -o-transform: rotateZ(540deg);
-  -ms-transform: rotateZ(540deg);
-  transform: rotateZ(540deg);
-}
-
-.card-widget .card-content .item-headline {
-  font-size: 16px;
-}
-
-.card-announcement-animation {
-  color: #f00 !important;
-  -webkit-animation: announ_animation 0.8s linear infinite;
-  -moz-animation: announ_animation 0.8s linear infinite;
-  -o-animation: announ_animation 0.8s linear infinite;
-  -ms-animation: announ_animation 0.8s linear infinite;
-  animation: announ_animation 0.8s linear infinite;
 }
 
 /* 放大缩小动画 */
@@ -1507,22 +1396,22 @@ main .aside-content .avatar-img:hover {
   margin-top: 20px;
 }
 
-.card-webinfo .webinfo {
+/* .card-webinfo .webinfo {
   padding: 4px 20px;
-}
+} */
 
-.card-webinfo .webinfo .webinfo-item {
+/* .card-webinfo .webinfo .webinfo-item {
   display: block;
   padding: 4px 0 0;
-}
+} */
 
-.card-webinfo .webinfo .webinfo-item div:first-child {
+/* .card-webinfo .webinfo .webinfo-item div:first-child {
   display: inline-block;
 }
 
 .card-webinfo .webinfo .webinfo-item div:last-child {
   float: right;
-}
+} */
 
 @-moz-keyframes to_show {
   0% {
@@ -2071,7 +1960,6 @@ main {
   display: block;
 }
 
-
 .comment_headling {
   margin-bottom: 10px;
   font-weight: 700;
@@ -2414,10 +2302,15 @@ main {
   padding-left: 0.3rem;
 }
 
-
-
 .is-center {
   text-align: center;
 }
 
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
 
+.zoomIn {
+  animation-name: zoomIn;
+}

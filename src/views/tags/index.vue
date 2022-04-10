@@ -28,26 +28,26 @@
 </template>
 
 <script>
-import { getTaglsit } from '@/api/tags'
+import { getTaglsit } from '@/api/tags';
 export default {
   data() {
     return {
       tagList: [],
       count: 0
-    }
+    };
   },
   created() {
-    this.getTaglsit()
+    this.getTaglsit();
   },
   methods: {
     async getTaglsit() {
-      const result = await getTaglsit()
-      this.tagList = result.data
-      this.count = result.count
+      const result = await getTaglsit();
+      this.tagList = result.data;
+      this.count = result.count;
       // console.log(result)
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

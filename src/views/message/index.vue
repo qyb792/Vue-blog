@@ -42,48 +42,48 @@
 </template>
 
 <script>
-import { getMessageList, addMessages } from '@/api/message'
+import { getMessageList, addMessages } from '@/api/message';
 export default {
   data() {
     return {
       show: false,
       messageContent: '',
       barrageList: []
-    }
+    };
   },
   mounted() {
-    this.listMessage()
+    this.listMessage();
   },
   methods: {
     addToList() {
       if (this.messageContent.trim() === '') {
-        this.$message.error('留言不能为空')
-        return false
+        this.$message.error('留言不能为空');
+        return false;
       }
       const userAvatar = this.$store.getters.loginAvatar
         ? this.$store.getters.loginAvatar
-        : 'https://cdn.jsdelivr.net/gh/zytqyb/Image-hosting@master/hexo_blog_img/y8qpqk.3hdi9olrkc80.jpg'
+        : 'https://cdn.jsdelivr.net/gh/zytqyb/Image-hosting@master/hexo_blog_img/y8qpqk.3hdi9olrkc80.jpg';
       const userNickname = this.$store.getters.loginNickname
         ? this.$store.getters.loginNickname
-        : '游客'
+        : '游客';
       var message = {
         avatar: userAvatar,
         nickname: userNickname,
         messageContent: this.messageContent,
         time: Math.floor(Math.random() * 10 + 3)
-      }
-      this.barrageList.push(message)
-      this.messageContent = ''
-      addMessages(message)
+      };
+      this.barrageList.push(message);
+      this.messageContent = '';
+      addMessages(message);
     },
     async listMessage() {
-      const result = await getMessageList()
+      const result = await getMessageList();
       if (result.success) {
-        this.barrageList = result.data
+        this.barrageList = result.data;
       }
     }
   }
-}
+};
 </script>
 
 <style>

@@ -8,7 +8,7 @@
       <div id="rightside_config" title="设置">
         <i class="iconfont iconshezhi setting" />
       </div>
-      <i id="go-up" class="fa fa-arrow-up" title="回到顶部" @click="backTop" />
+      <i id="go-up" class="iconfont rightside-icon iconziyuanldpi" title="回到顶部" @click="backTop" />
     </div>
   </div>
 

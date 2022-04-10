@@ -22,6 +22,8 @@ import 'highlight.js/styles/atom-one-dark.css'
 import animated from 'animate.css'
 Vue.use(animated)
 
+Vue.config.devtools = true
+
 Vue.config.productionTip = false
 
 Vue.filter('date', function(value) {
@@ -44,4 +46,3 @@ new Vue({
 }).$mount('#app')
 
 import '@/permission'
-

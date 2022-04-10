@@ -36,13 +36,13 @@
 </template>
 
 <script>
-import TopNavBar from '@/components/layout/component/TopNavBar'
-import AppMain from '@/components/layout/component/AppMain'
-import BackTop from '@/components/BackTop'
-import Footer from '@/components/layout/component/Footer'
-import aplayer from '@/components/aplayer'
+import TopNavBar from '@/components/layout/component/TopNavBar';
+import AppMain from '@/components/layout/component/AppMain';
+import BackTop from '@/components/BackTop';
+import Footer from '@/components/layout/component/Footer';
+import aplayer from '@/components/aplayer';
 
-import { login } from '@/api/user'
+import { login } from '@/api/user';
 export default {
   components: {
     TopNavBar,
@@ -56,41 +56,41 @@ export default {
       username: '',
       password: '',
       isLoginDialog: false
-    }
+    };
   },
   computed: {},
   created() {
-    this.$store.dispatch('blog/getBlogInfo')
+    // this.$store.dispatch('blog/getBlogInfo')
   },
   methods: {
     isLogin() {
-      this.isLoginDialog = true
+      this.isLoginDialog = true;
     },
     async login() {
       // var reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
       if (this.username.length === 0) {
-        this.$message.error('用户名不能为空')
-        return false
+        this.$message.error('用户名不能为空');
+        return false;
       }
       if (this.password.trim().length === 0) {
-        this.$message.error('密码不能为空')
-        return false
+        this.$message.error('密码不能为空');
+        return false;
       }
       const param = {
         username: this.username,
         password: this.password
-      }
-      const result = await login(param)
-      console.log(result)
+      };
+      const result = await login(param);
+      console.log(result);
       if (result.success) {
-        this.username = ''
-        this.password = ''
-        this.$store.dispatch('blog/login', result.user.user)
-        this.isLoginDialog = false
+        this.username = '';
+        this.password = '';
+        this.$store.dispatch('blog/login', result.user.user);
+        this.isLoginDialog = false;
       }
     }
   }
-}
+};
 </script>
 
 <style>
