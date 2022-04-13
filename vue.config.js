@@ -10,10 +10,17 @@ module.exports = {
     open: true,
     proxy: {
       '/api': {
-        target: 'http://124.221.154.248:8090',
+        target: 'http://124.221.154.248:8090/',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
+        }
+      },
+      '/music': {
+        target: 'http://119.91.135.135:7979/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/music': ''
         }
       }
     },
