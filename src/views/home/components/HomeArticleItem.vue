@@ -8,9 +8,10 @@
     </div>
 
     <div class="recent-post-information">
-      <router-link class="article-title" :to="'/article/' + article.id">
+      <router-link class="article-title" :to="'/articles/' + article.id">
         {{ article.articleTitle }}
       </router-link>
+
       <div class="article-information">
         <span class="article-meta" v-if="article.isTop == 1">
           <i class="iconfont iconzhiding sticky" />

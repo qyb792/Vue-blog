@@ -79,7 +79,7 @@ export default {
 
 <style>
 .swiper-container {
-  margin-top: 20px;
+  /* margin-top: 20px; */
   padding: 0.6rem 1rem;
   display: flex;
   align-items: center;

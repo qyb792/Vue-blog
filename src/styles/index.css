@@ -164,9 +164,9 @@ a:hover {
     margin-top: 0px !important;
   }
 
-  .card-widget {
+  /* .card-widget {
     margin-left: 15px !important;
-  }
+  } */
 
   .layout_page {
     padding: 40px 15px !important;
@@ -207,9 +207,9 @@ a:hover {
     margin-top: 0px !important;
   }
 
-  .card-widget {
+  /* .card-widget {
     margin-left: 15px !important;
-  }
+  } */
 
   .layout_page {
     padding: 40px 15px !important;
@@ -250,9 +250,9 @@ a:hover {
     margin-top: 0 !important;
   }
 
-  .card-widget {
+  /* .card-widget {
     margin-left: 15px !important;
-  }
+  } */
 
   .layout_page {
     padding: 40px 15px !important;
@@ -1025,10 +1025,6 @@ hr:hover:before {
   margin-right: 4px;
 }
 
-
-
-
-
 .article-meta .categories {
   color: #858585;
 }
@@ -1087,6 +1083,8 @@ hr:hover:before {
 main .aside-content {
   width: 25%;
   padding: 7.5px;
+  height: 100%;
+  position: relative;
 }
 
 main .aside-content .card-widget {
@@ -2274,7 +2272,7 @@ main {
   width: 75%;
 }
 
-.layout_post > #post,
+/* .layout_post > #post,
 .layout_page > div:first-child:not(.recent-posts) {
   padding: 50px 40px;
   border-radius: 8px;
@@ -2286,7 +2284,7 @@ main {
   -o-transition: all 0.3s;
   -ms-transition: all 0.3s;
   transition: all 0.3s;
-}
+} */
 
 #article-container ol,
 #article-container ul {
@@ -2313,4 +2311,41 @@ main {
 
 .zoomIn {
   animation-name: zoomIn;
+}
+
+.hljs {
+  background: #282c34 !important;
+}
+
+pre.hljs code {
+  display: block !important;
+  margin: 0 10px !important;
+  overflow-x: auto !important;
+}
+
+.is-collapsed {
+  display: none;
+}
+
+.toc-list-item {
+  line-height: 2;
+  list-style: none;
+}
+.toc-link {
+  display: block;
+  border-left: 3px solid transparent;
+  padding-left: 6px;
+  color: #666261 !important;
+  transition: all 0.2s ease-in-out;
+}
+.is-active-link {
+  border-left-color: #009d92;
+  background: #00c4b6;
+  color: #fff !important;
+}
+
+.sticky_layout {
+  position: sticky;
+  top: 20px;
+  /* transition: top 0.3s; */
 }

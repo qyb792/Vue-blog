@@ -147,6 +147,7 @@ export default {
 }
 
 .card {
+  background: #fff;
   border-width: thin;
   display: block;
   max-width: 100%;

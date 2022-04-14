@@ -95,39 +95,6 @@
       </div>
     </div>
 
-    <!-- 最新文章 -->
-    <!-- <div class="card-widget card-recent-post">
-      <div class="card-content">
-        <div class="item-headline">
-          <i class="fa fa-history" />
-          <span>最新文章</span>
-        </div>
-        <div class="aside-recent-item">
-          <div
-            v-for="item in newBlog"
-            :key="item.articleId"
-            class="aside-recent-post"
-          >
-            <a href="./article.html">
-              <div class="aside-post-cover">
-                <img
-                  class="aside-post-bg lazyloaded"
-                  :src="item.articleCover"
-                  alt=""
-                />
-              </div>
-              <div class="aside-post-title">
-                <div class="aside-post_title">
-                  {{ item.articleTitle }}
-                </div>
-                <time>{{ item.createTime }}</time>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
     <!-- 网站信息 -->
     <div class="card-widget card-webinfo">
       <div class="card-content">
@@ -441,5 +408,20 @@ export default {
       justify-content: space-between;
     }
   }
+}
+
+.toc-list {
+  padding: 0 !important;
+}
+
+.sticky_layout {
+  position: sticky;
+  position: -webkit-sticky;
+  top: px;
+  -webkit-transition: top 0.3s;
+  -moz-transition: top 0.3s;
+  -o-transition: top 0.3s;
+  -ms-transition: top 0.3s;
+  transition: top 0.3s;
 }
 </style>

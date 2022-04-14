@@ -24,8 +24,8 @@ const routes = [
       },
       {
         // 文章
-        path: '/article/*',
-        name: 'article',
+        path: '/articles/*',
+        name: 'articles',
         component: () => import('@/views/article'),
       },
       {

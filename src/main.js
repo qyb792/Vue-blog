@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 import './plugins/element.js'
 import dayjs from 'dayjs';
+import VueImageSwipe from 'vue-image-swipe';
+import 'vue-image-swipe/dist/vue-image-swipe.css';
 
 import './styles/markdown.css'
 
@@ -13,6 +15,8 @@ Vue.use(Component) // 注册自己的插件
 
 import { vueBaberrage } from 'vue-baberrage'
 Vue.use(vueBaberrage)
+
+Vue.use(VueImageSwipe);
 
 import '@/styles/index.css'
 import '@/styles/darkmode.css' // 夜间模式css
