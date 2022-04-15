@@ -2,64 +2,7 @@
   <div>
     <!-- banner -->
     <!-- 封面图 -->
-    <div class="banner" :style="articleCover">
-      <div class="article-info-container">
-        <!-- 文章标题 -->
-        <div class="article-title">{{ article.articleTitle }}</div>
-        <div class="article-info">
-          <div class="first-line">
-            <!-- 发表时间 -->
-            <span>
-              <i class="iconfont iconrili" />
-              发表于 {{ article.createTime | date }}
-            </span>
-            <span class="separator"> | </span>
-            <!-- 发表时间 -->
-            <span>
-              <i class="iconfont icongengxinshijian" />
-              更新于
-              <template v-if="article.updateTime">
-                {{ article.updateTime | date }}
-              </template>
-              <template v-else>
-                {{ article.createTime | date }}
-              </template>
-            </span>
-            <span class="separator"> | </span>
-            <!-- 文章分类 -->
-            <span class="article-category">
-              <i class="iconfont iconfenlei1" />
-              <router-link :to="'/categories/' + article.categoryId">
-                {{ article.categoryName }}
-              </router-link>
-            </span>
-          </div>
-          <div class="second-line">
-            <!-- 字数统计 -->
-            <span>
-              <i class="iconfont iconzishu" />
-              字数统计: {{ wordNum | num }}
-            </span>
-            <span class="separator"> | </span>
-            <!-- 阅读时长 -->
-            <span>
-              <i class="iconfont iconshijian" />
-              阅读时长: {{ readTime }}
-            </span>
-            <span class="separator"> | </span>
-            <!-- 阅读量 -->
-            <span>
-              <i class="iconfont iconliulan" /> 阅读量: {{ article.viewsCount }}
-            </span>
-            <span class="separator"> | </span>
-            <!-- 评论量 -->
-            <span>
-              <i class="iconfont iconpinglunzu1" />评论数: {{ commentCount }}
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <SmallBanner :article="article" :articleValue="articleValue" :commentCount="commentCount" :articleCover="articleCover" />
     <main class="layout">
       <div id="post">
         <article
@@ -179,6 +122,38 @@
             </div>
           </div>
 
+          <!-- 最新文章 -->
+          <div class="card-widget">
+            <div class="card-content">
+              <div class="item-headline">
+                <i class="iconfont icongengxinshijian" />
+                <span>最新文章</span>
+              </div>
+              <div class="article-list">
+                <div
+                  class="article-item"
+                  v-for="item of article.newestArticleList"
+                  :key="item.id"
+                >
+                  <router-link
+                    :to="'/articles/' + item.id"
+                    class="content-cover"
+                  >
+                    <img :src="item.articleCover" />
+                  </router-link>
+                  <div class="content">
+                    <div class="content-title">
+                      <router-link :to="'/articles/' + item.id">
+                        {{ item.articleTitle }}
+                      </router-link>
+                    </div>
+                    <div class="content-time">{{ item.createTime | date }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- 网站信息 -->
           <div class="card-widget card-webinfo">
             <div class="card-content">
@@ -219,9 +194,14 @@
 <script>
 import Clipboard from 'clipboard';
 import tocbot from 'tocbot';
+import SmallBanner from '@/components/layout/component/SmallBanner';
 import { getIdArticle } from '@/api/article';
-import { Message } from 'element-ui';
+
+import request from '@/utils/request';
 export default {
+  components: {
+    SmallBanner,
+  },
   created() {
     this.getArticle();
     this.timer = setInterval(this.runTime, 1000);
@@ -248,8 +228,10 @@ export default {
       recommendArticleList: [],
       newestArticleList: [],
     },
-    wordNum: '',
-    readTime: '',
+    articleValue: {
+      wordNum: '',
+      readTime: '',
+    },
     commentType: 1,
     articleHref: window.location.href,
     clipboard: null,
@@ -280,19 +262,21 @@ export default {
     // 获取并且渲染文章
     getArticle() {
       const that = this;
-      getIdArticle(this.$route.params.pathMatch).then((data) => {
+      getIdArticle(this.$route.params.articleId).then(({ data }) => {
         document.title = data.articleTitle;
         //将markdown转换为Html
         this.markdownToHtml(data);
         this.$nextTick(() => {
           // 统计文章字数
-          this.wordNum = this.deleteHTMLTag(this.article.articleContent).length;
+          this.articleValue.wordNum = this.deleteHTMLTag(
+            this.article.articleContent
+          ).length;
           // 计算阅读时间
-          this.readTime = Math.round(this.wordNum / 400) + '分钟';
+          this.articleValue.readTime = Math.round(this.articleValue.wordNum / 400) + '分钟';
           // 添加代码复制功能
           this.clipboard = new Clipboard('.copy-btn');
           this.clipboard.on('success', () => {
-            Message({ type: 'success', message: '复制成功' });
+            this.$message({ type: 'success', message: '复制成功' });
           });
           // 添加文章生成目录功能
           let nodes = this.$refs.article.children;
@@ -332,21 +316,19 @@ export default {
         return false;
       }
       //发送请求
-      this.axios
-        .post('/api/articles/' + this.article.id + '/like')
-        .then(({ data }) => {
-          if (data.flag) {
-            //判断是否点赞
-            if (
-              this.$store.state.articleLikeSet.indexOf(this.article.id) !== -1
-            ) {
-              this.$set(this.article, 'likeCount', this.article.likeCount - 1);
-            } else {
-              this.$set(this.article, 'likeCount', this.article.likeCount + 1);
-            }
-            this.$store.commit('articleLike', this.article.id);
+      request.post('/articles/' + this.article.id + '/like').then((data) => {
+        if (data.flag) {
+          //判断是否点赞
+          if (
+            this.$store.state.articleLikeSet.indexOf(this.article.id) !== -1
+          ) {
+            this.$set(this.article, 'likeCount', this.article.likeCount - 1);
+          } else {
+            this.$set(this.article, 'likeCount', this.article.likeCount + 1);
           }
-        });
+          this.$store.commit('articleLike', this.article.id);
+        }
+      });
     },
     markdownToHtml(article) {
       const MarkdownIt = require('markdown-it');
@@ -806,6 +788,7 @@ pre.hljs {
 }
 </style>
 
+// 右侧菜单栏
 <style lang="less" scoped>
 #aside-content {
   line-height: 2;
@@ -971,5 +954,70 @@ pre.hljs {
   -o-transition: top 0.3s;
   -ms-transition: top 0.3s;
   transition: top 0.3s;
+}
+
+.article-list {
+  img {
+    width: 100%;
+    height: 100%;
+    transition: all 0.6s;
+    object-fit: cover;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  .content-title a {
+    transition: all 0.2s;
+    font-size: 100%;
+    color: #4c4948;
+    text-decoration: none;
+    &:hover {
+      color: #2ba1d1;
+    }
+  }
+  .article-item {
+    display: flex;
+    align-items: center;
+    padding: 6px 0;
+
+    &:first-child {
+      padding-top: 0;
+    }
+    &:last-child {
+      padding-bottom: 0;
+    }
+    &:not(:last-child) {
+      border-bottom: 1px dashed #f5f5f5;
+    }
+  }
+
+  .content {
+    flex: 1;
+    padding-left: 10px;
+    word-break: break-all;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+  }
+  .content-cover {
+    width: 58.8px;
+    height: 58.8px;
+    overflow: hidden;
+
+    & > a {
+      transition: all 0.2s;
+      font-size: 95%;
+      &:hover {
+        color: #2ba1d1;
+      }
+    }
+  }
+}
+.content-time {
+  color: #858585;
+  font-size: 85%;
+  line-height: 2;
 }
 </style>

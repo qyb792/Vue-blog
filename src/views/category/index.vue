@@ -1,13 +1,10 @@
 <template>
   <div>
     <!-- banner -->
-    <banner
-      :banner-title="'分类'"
-      :banner-img="'https://cdn.jsdelivr.net/gh/zytqyb/Image-hosting@master/hexo_blog_img/3.42hgan96tn60.jpg'"
-    />
+    <SmallBanner title="分类" :articleCover="cover" />
     <!-- 分类内容 -->
     <main id="content-inner" class="layout_page">
-      <div id="category">
+      <div id="category" class="category">
         <div class="category-lists">
           <div class="category-title is-center">
             分类 - <span class="category-amount">{{ count }}</span>
@@ -19,15 +16,15 @@
                 :key="item.id"
                 class="category-list-item"
               >
-                <router-link class="category-list-link" :to="'/category/' + item.id">
+                <router-link :to="'/categories/' + item.id">
                   {{ item.categoryName }}
+                  <span class="category-count">({{ item.articleCount }})</span>
                 </router-link>
-                <span class="category-list-count">{{ item.articleCount }}</span>
               </li>
             </ul>
           </div>
         </div>
-        <hr>
+        <hr class="scissorsHr" />
       </div>
       <!-- 右侧菜单 -->
       <aside-content />
@@ -36,26 +33,34 @@
 </template>
 
 <script>
-import { getCategoryList } from '@/api/category'
+import { getCategoryList } from '@/api/category';
 export default {
   data() {
     return {
       categoryList: [],
-      count: 0
-    }
+      count: 0,
+    };
   },
   created() {
-    this.getCategoryList()
+    getCategoryList().then(({ data }) => {
+      console.log(data);
+      this.categoryList = data.recordList;
+      this.count = data.count;
+    });
   },
-  methods: {
-    async getCategoryList() {
-      const result = await getCategoryList()
-      // console.log(result)
-      this.categoryList = result.data
-      this.count = result.count
-    }
-  }
-}
+  methods: {},
+  computed: {
+    cover() {
+      var cover = '';
+      this.$store.state.blogInfo.pageList.forEach((item) => {
+        if (item.pageLabel === 'category') {
+          cover = item.pageCover;
+        }
+      });
+      return 'background: url(' + cover + ') center center / cover no-repeat';
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -76,9 +81,9 @@ export default {
         overflow-wrap: break-word;
         background-color: transparent;
 
-				&:hover {
-					color: #49b1f5;
-				}
+        &:hover {
+          color: #49b1f5;
+        }
       }
 
       .category-list-count {
@@ -119,7 +124,7 @@ export default {
           -o-transition: all 0.3s ease-out;
           -ms-transition: all 0.3s ease-out;
           transition: all 0.3s ease-out;
-          top: 0.7em;
+          top: 0.4em;
           width: 0.43em;
           height: 0.43em;
           border: 0.215em solid #49b1f5;
@@ -135,4 +140,78 @@ export default {
     }
   }
 }
+</style>
+
+// 自适应
+<style lang="less" scoped>
+.category {
+  -o-box-align: center;
+  align-items: center;
+  padding: 0;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 8px 6px rgb(7 17 27 / 6%);
+  transition: all 0.3s;
+  padding: 50px 40px;
+}
+@media screen and (max-width: 900px) {
+  .layout {
+    flex-wrap: wrap;
+  }
+
+  #aside_content {
+    margin-top: 20px;
+    width: 100% !important;
+    .card-widget {
+      margin-left: 0 !important;
+      .card-content {
+        // .card-info-social-icons {
+        // }
+
+        .author-info-description {
+          font-size: 0.875rem;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 900px) {
+  #aside_content {
+    .card-widget {
+      margin-left: 0px !important;
+      // .card-content {
+      //   .card-info-social-icons {
+      //   }
+      // }
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  #aside_content {
+    .card-widget {
+      margin-left: 0px !important;
+      // .card-content {
+      //   .card-info-social-icons {
+      //   }
+      // }
+    }
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  #aside_content {
+    .card-widget {
+      margin-left: 0px !important;
+
+      .card-content {
+        padding: 20px 24px;
+        // .card-info-social-icons {
+        // }
+      }
+    }
+  }
+}
+
 </style>

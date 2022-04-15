@@ -1,71 +1,93 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
-import './plugins/element.js'
+import Vue from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+import './plugins/element.js';
 import dayjs from 'dayjs';
 import VueImageSwipe from 'vue-image-swipe';
 import 'vue-image-swipe/dist/vue-image-swipe.css';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 
-import './styles/markdown.css'
+import config from './assets/js/config';
+
+import './styles/markdown.css';
 
 // 引入自定义组件中的自定义从插件
-import Component from '@/components'
-Vue.use(Component) // 注册自己的插件
+import Component from '@/components';
+Vue.use(Component); // 注册自己的插件
 
-import { vueBaberrage } from 'vue-baberrage'
-Vue.use(vueBaberrage)
+import { vueBaberrage } from 'vue-baberrage';
+Vue.use(vueBaberrage);
 
 Vue.use(VueImageSwipe);
 
-import '@/styles/index.css'
-import '@/styles/darkmode.css' // 夜间模式css
-import '@/assets/fonts/iconfont.css'
-import './plugins/element.js'
-import 'highlight.js/styles/atom-one-dark.css'
-import animated from 'animate.css'
-Vue.use(animated)
+import '@/styles/index.css';
+import '@/styles/darkmode.css'; // 夜间模式css
+import '@/assets/fonts/iconfont.css';
+import './plugins/element.js';
+import 'highlight.js/styles/atom-one-dark.css';
+import animated from 'animate.css';
+Vue.use(animated);
 
-Vue.config.devtools = true
+Vue.prototype.config = config;
 
-Vue.config.productionTip = false
+Vue.config.devtools = true;
 
-Vue.filter('date', function(value) {
+Vue.config.productionTip = false;
+
+Vue.filter('date', function (value) {
   return dayjs(value).format('YYYY-MM-DD');
 });
 
-Vue.filter('year', function(value) {
+Vue.filter('year', function (value) {
   return dayjs(value).format('YYYY');
 });
 
-Vue.filter('hour', function(value) {
+Vue.filter('hour', function (value) {
   return dayjs(value).format('HH:mm:ss');
 });
 
-Vue.filter('time', function(value) {
+Vue.filter('time', function (value) {
   return dayjs(value).format('YYYY-MM-DD HH:mm:ss');
 });
 
-Vue.filter('num', function(value) {
+Vue.filter('num', function (value) {
   if (value >= 1000) {
     return (value / 1000).toFixed(1) + 'k';
   }
   return value;
 });
 
-import hevueImgPreview from 'hevue-img-preview'
-Vue.use(hevueImgPreview)
+router.beforeEach((to, from, next) => {
+  NProgress.start();
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }
+  next();
+});
 
-import APlayer from '@moefe/vue-aplayer'
+router.afterEach(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'instant',
+  });
+  NProgress.done();
+});
+
+import hevueImgPreview from 'hevue-img-preview';
+Vue.use(hevueImgPreview);
+
+import APlayer from '@moefe/vue-aplayer';
 Vue.use(APlayer, {
   defaultCover: 'https://github.com/u3u.png',
-  productionTip: true
-})
+  productionTip: true,
+});
 
 new Vue({
   router,
   store,
-  render: (h) => h(App)
-}).$mount('#app')
+  render: (h) => h(App),
+}).$mount('#app');
 
-import '@/permission'
+import '@/permission';

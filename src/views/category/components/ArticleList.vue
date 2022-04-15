@@ -1,35 +1,38 @@
 <template>
   <div>
     <!-- banner -->
-    <banner
-      :banner-title="title"
-      :banner-img="'https://cdn.jsdelivr.net/gh/zytqyb/Image-hosting@master/hexo_blog_img/3.42hgan96tn60.jpg'"
-    />
+    <SmallBanner :title="`${title} - ${name}`" :articleCover="cover" />
 
     <div class="article-list-wrapper animate__animated animate__backInUp">
-      <el-row>
-        <el-col v-for="item of articleList" :key="item.id" :span="8">
-          <el-card :body-style="{ padding: '0px' }">
-            <router-link :to="'/article/' + item.id">
-              <img :src="item.articleCover" class="image">
-            </router-link>
+      <div class="article-list">
+        <div
+          class="article-list-item"
+          v-for="item of articleList"
+          :key="item.id"
+        >
+          <el-card class="card" :body-style="{ padding: '0px' }">
+            <div class="article-item-cover">
+              <router-link :to="'/article/' + item.id" style="height: 100%">
+                <img :src="item.articleCover" class="image" />
+              </router-link>
+            </div>
             <div class="article-item-info">
               <!-- 文章标题 -->
               <div>
-                <router-link :to="'/article/' + item.id">
+                <router-link :to="'/articles/' + item.id">
                   {{ item.articleTitle }}
                 </router-link>
               </div>
               <div style="" class="article-info">
                 <span>
                   <!-- 发表时间 -->
-                  <i class="fa fa-history" />
+                  <i class="iconfont iconshijian" />
                   {{ item.createTime | date }}
                 </span>
                 <!-- 文章分类 -->
                 <span>
                   <router-link
-                    :to="'/category/' + item.categoryId"
+                    :to="'/categories/' + item.categoryId"
                     class="float-right"
                   >
                     <i class="el-icon-collection-tag" />{{ item.categoryName }}
@@ -43,70 +46,77 @@
             <!-- 文章标签 -->
             <div class="tag-wrapper">
               <router-link
-                v-for="tag of item.tagDTOList"
-                :key="tag.tagId"
-                :to="'/tag/' + tag.tagId"
+                :to="'/tags/' + tag.id"
                 class="tag-btn"
+                v-for="tag of item.tagDTOList"
+                :key="tag.id"
               >
                 {{ tag.tagName }}
               </router-link>
             </div>
           </el-card>
-        </el-col>
-      </el-row>
-
-      <el-pagination
-        :current-page.sync="current"
-        :page-size="10"
-        background
-        layout="prev, pager, next, jumper"
-        :total="this.$store.getters.articleCount"
-        @current-change="handleCurrentChange"
-      />
+        </div>
+      </div>
     </div>
-
   </div>
-
 </template>
 <script>
-import { getCategoryArticle } from '@/api/category'
+import request from '@/utils/request';
 export default {
   data() {
     return {
       current: 1,
+      size: 10,
       articleList: [],
       name: '',
       title: '',
-      categoryOrTag: '',
-      count: 20
-    }
+    };
   },
   created() {
-    const path = this.$route.path
-    if (path.indexOf('/category') !== -1) {
-      this.title = '分类'
-      this.categoryOrTag = 'category-banner'
+    const path = this.$route.path;
+    if (path.indexOf('/categories') !== -1) {
+      this.title = '分类';
     } else {
-      this.title = '标签'
-      this.categoryOrTag = 'tag-banner'
+      this.title = '标签';
     }
-    this.getCategoryArticle()
+    this.infiniteHandler();
+  },
+  computed: {
+    cover() {
+      let cover = '';
+      this.$store.state.blogInfo.pageList.forEach((item) => {
+        if (item.pageLabel === 'articleList') {
+          cover = item.pageCover;
+        }
+      });
+      return 'background: url(' + cover + ') center center / cover no-repeat';
+    },
   },
   methods: {
-    // 当页数改变边的时候
-    handleCurrentChange(val) {
-      this.current = val
-      this.getCategoryArticle()
+    infiniteHandler() {
+      request
+        .get('/articles/condition', {
+          params: {
+            categoryId: this.$route.params.categoryId,
+            tagId: this.$route.params.tagId,
+            current: this.current,
+          },
+        })
+        .then(({ data }) => {
+          if (data.name) {
+            this.name = data.name;
+            document.title = this.title + ' - ' + this.name;
+          }
+          if (data.articlePreviewDTOList.length) {
+            this.current++;
+            this.articleList.push(...data.articlePreviewDTOList);
+            this.articleList.push(...data.articlePreviewDTOList);
+            this.articleList.push(...data.articlePreviewDTOList);
+          }
+        });
     },
-
-    async getCategoryArticle() {
-      const url = this.$route.path
-      const result = await getCategoryArticle(url, this.current)
-      this.articleList = result.data.articlePreviewDTOList
-      this.name = console.log(result)
-    }
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -148,30 +158,21 @@ export default {
   color: #4c4948;
   text-decoration: none;
 
-	&:hover {
-		color: #1976d2;
-	}
+  &:hover {
+    color: #1976d2;
+  }
 }
 
 .el-pagination {
-	display: flex;
-	justify-content: center;
-	margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
-@media (min-width: 760px) {
-  .article-list-wrapper {
-    max-width: 1106px;
-    margin: 50px auto 1rem auto;
-  }
-}
-
-@media (min-width: 760px) {
-  .article-item-info {
-    line-height: 1.7;
-    padding: 15px 15px 12px 18px;
-    font-size: 15px;
-  }
+.article-item-info {
+  line-height: 1.7;
+  padding: 15px 15px 12px 18px;
+  font-size: 15px;
 }
 
 .el-row {
@@ -192,6 +193,26 @@ export default {
 
 .el-card__body {
   padding: 0 !important;
+  &:hover {
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px 12px rgb(7 17 27 / 15%);
+  }
+}
+
+.card {
+  .article-item-cover {
+    height: 220px;
+    overflow: hidden;
+  }
+  &:hover {
+    transition: all 0.5s;
+    box-shadow: 0 4px 12px 12px rgb(7 17 27 / 15%);
+
+    .image {
+      transition: all 0.5s;
+      transform: scale(1.1);
+    }
+  }
 }
 </style>
 
@@ -214,7 +235,7 @@ export default {
 .image {
   width: 100%;
   display: block;
-  height: 200px;
+  height: 100%;
 }
 
 .clearfix:before,
@@ -225,5 +246,26 @@ export default {
 
 .clearfix:after {
   clear: both;
+}
+</style>
+
+// 自适应
+
+<style lang="less" scoped>
+@media screen and (min-width: 1140px) {
+  .article-list-wrapper {
+    max-width: 1170px;
+    margin: 50px auto 1rem auto;
+
+    .article-list {
+      display: flex;
+      flex-wrap: wrap;
+      margin: -12px;
+      .article-list-item {
+        flex: 0 0 33.3333333333%;
+        max-width: 33.3333333333%;
+      }
+    }
+  }
 }
 </style>

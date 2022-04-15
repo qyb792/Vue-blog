@@ -17,17 +17,20 @@ const routes = [
       },
       {
         // 归档
-        path: '/archive',
-        name: 'archive',
-        component: () => import('@/views/archive'),
-        meta: { title: '归档页面' },
+        path: '/archives',
+        name: 'archives',
+        component: () => import('@/views/archives'),
+        meta: {
+          title: '归档',
+        },
       },
       {
         // 文章
-        path: '/articles/*',
+        path: '/articles/:articleId',
         name: 'articles',
         component: () => import('@/views/article'),
       },
+
       {
         // 关于
         path: '/about',
@@ -43,15 +46,15 @@ const routes = [
         meta: { title: '留言' },
       },
       {
-        // 分类
-        path: '/category',
-        name: 'category',
-        component: () => import('@/views/category'),
-        meta: { title: '分类' },
+        path: '/categories',
+        component: () => import('@/views/category/'),
+        meta: {
+          title: '分类',
+        },
       },
       {
-        path: '/category/*',
-        component: () => import('@/views/category/components/ArticleList'),
+        path: '/categories/:categoryId',
+        component: () => import('@/views/category/components/ArticleList.vue')
       },
       {
         // 标签
@@ -61,13 +64,21 @@ const routes = [
         meta: { title: '标签' },
       },
       {
-        path: '/tag/*',
-        component: () => import('@/views/category/components/ArticleList'),
+        path: '/tags/:tagId',
+        component: () => import('@/views/category/components/ArticleList.vue')
       },
       {
         path: '/link',
         component: () => import('@/views/link'),
         meta: { title: '友链' },
+      },
+      {
+        path: '/zytqyb',
+        component: () => import('@/components/OauthLogin.vue'),
+      },
+      {
+        path: '/oauth/login/weibo',
+        component: () => import('@/components/OauthLogin.vue'),
       },
     ],
   },

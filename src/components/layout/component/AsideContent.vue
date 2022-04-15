@@ -113,10 +113,7 @@
             <div class="webinfo-article-name">已运行时间 :</div>
             <div class="webinfo-article-count">{{ time }}</div>
           </div>
-          <div class="webinfo-item">
-            <div class="webinfo-article-name">本站总字数 :</div>
-            <div class="webinfo-article-count">10.6k</div>
-          </div>
+
           <div class="webinfo-item">
             <div class="webinfo-article-name">本站总访问量 :</div>
             <div class="webinfo-article-count">{{ blogInfo.viewsCount }}</div>
@@ -168,7 +165,7 @@ export default {
     },
   },
   created() {
-    this.init();
+    // this.init();
     this.listHomeTalks();
     this.timer = setInterval(this.runTime, 1000);
   },
@@ -181,11 +178,11 @@ export default {
       });
     },
     // 初始化
-    init() {
-      document.title = this.blogInfo.websiteConfig.websiteName;
-    },
+    // init() {
+    //   document.title = this.blogInfo.websiteConfig.websiteName;
+    // },
     listHomeTalks() {
-      request('/home/talks').then((data) => {
+      request('/home/talks').then(({ data }) => {
         this.talkList = data;
       });
     },

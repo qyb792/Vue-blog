@@ -4,7 +4,7 @@ import request from '@/utils/request'
 export function getTaglsit() {
   // 返回一个axios对象 => promise
   return request({
-    url: '/tag/tags'
+    url: '/tags'
 
   })
 }

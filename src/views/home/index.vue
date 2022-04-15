@@ -13,10 +13,11 @@
         </div>
 
         <!-- 首页文章列表展示 -->
-        <home-article-item
-          v-for="article in articleList"
+        <HomeArticleItem
+          v-for="(article, i) in articleList"
           :key="article.articleId"
           :article="article"
+          :index="i"
         />
 
         <el-pagination
@@ -63,7 +64,7 @@ export default {
   methods: {
     async getArticleList() {
       let md = require('markdown-it')();
-      const data = await request('/articles', {
+      const { data } = await request('/articles', {
         params: {
           current: this.current,
         },
@@ -86,7 +87,7 @@ export default {
       // 一言Api进行打字机循环输出效果
     },
     async listHomeTalks() {
-      await request('/home/talks').then((data) => {
+      await request('/home/talks').then(({ data }) => {
         this.talkList = data;
       });
     },
@@ -122,7 +123,7 @@ export default {
         params: {
           current: this.current,
         },
-      }).then((data) => {
+      }).then(({ data }) => {
         if (data.length) {
           // 去除markdown标签
           data.forEach((item) => {

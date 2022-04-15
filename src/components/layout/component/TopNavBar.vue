@@ -166,9 +166,9 @@ export default {
       request('/logout').then((data) => {
         if (data.flag) {
           this.$store.commit('logout');
-          this.$toast({ type: 'success', message: '注销成功' });
+          this.$message({ type: 'success', message: '注销成功' });
         } else {
-          this.$toast({ type: 'error', message: data.message });
+          this.$message({ type: 'error', message: data.message });
         }
       });
     },

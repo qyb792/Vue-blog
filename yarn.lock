@@ -6097,7 +6097,7 @@
   dependencies:
     "mime-db" "1.48.0"
 
-"mime@^1.4.1":
+"mime@^1.4.1", "mime@1.6.0":
   "integrity" "sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg=="
   "resolved" "https://registry.npmjs.org/mime/-/mime-1.6.0.tgz"
   "version" "1.6.0"
@@ -6106,11 +6106,6 @@
   "integrity" "sha1-bj3GzCuVEGQ4MOXxnVy3U9pe6r4="
   "resolved" "https://registry.npm.taobao.org/mime/download/mime-2.5.2.tgz"
   "version" "2.5.2"
-
-"mime@1.6.0":
-  "integrity" "sha1-Ms2eXGRVO9WNGaVor0Uqz/BJgbE="
-  "resolved" "https://registry.npm.taobao.org/mime/download/mime-1.6.0.tgz"
-  "version" "1.6.0"
 
 "mimic-fn@^1.0.0":
   "integrity" "sha1-ggyGo5M0ZA6ZUWkovQP8qIBX0CI="
@@ -9347,6 +9342,11 @@
   "resolved" "https://registry.npm.taobao.org/vue-cli-plugin-element/download/vue-cli-plugin-element-1.0.1.tgz"
   "version" "1.0.1"
 
+"vue-cute-timeline@^1.2.8":
+  "integrity" "sha512-kzzFkQUdE93+tYz7dGK9gUl2k8+9fd0//ISlg6qZqv97l9rK/xt+eCSXdqI7+leoSkSGgN2EqoMO91UKdY62Gw=="
+  "resolved" "https://registry.npmjs.org/vue-cute-timeline/-/vue-cute-timeline-1.2.10.tgz"
+  "version" "1.2.10"
+
 "vue-eslint-parser@^7.0.0":
   "integrity" "sha1-AeoaKTL1gf8kQzZWXXEoAfj3JWE="
   "resolved" "https://registry.npm.taobao.org/vue-eslint-parser/download/vue-eslint-parser-7.6.0.tgz"
@@ -9425,7 +9425,7 @@
   "resolved" "https://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.9.1.tgz"
   "version" "1.9.1"
 
-"vue@^2 || ^3.0.0-0", "vue@^2.0.0", "vue@^2.5.16", "vue@^2.5.17", "vue@^2.6.11":
+"vue@^2 || ^3.0.0-0", "vue@^2.0.0", "vue@^2.1.8", "vue@^2.5.16", "vue@^2.5.17", "vue@^2.6.11":
   "integrity" "sha512-x2284lgYvjOMj3Za7kqzRcUSxBboHqtgRE2zlos1qWaOye5yUmHn42LB1250NJBLRwEcdrB0JRwyPTEPhfQjiQ=="
   "resolved" "https://registry.npmmirror.com/vue/-/vue-2.6.14.tgz"
   "version" "2.6.14"

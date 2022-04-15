@@ -4,7 +4,7 @@ import request from '@/utils/request'
 export function getCategoryList() {
   // 返回一个axios对象 => promise
   return request({
-    url: '/category/listCategories'
+    url: '/categories'
 
   })
 }

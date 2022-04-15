@@ -76,6 +76,7 @@ a:hover {
   .aside-content {
     width: 100% !important;
     margin-top: 20px !important;
+    padding: 0 !important;
   }
 
   .card-widget {
@@ -152,7 +153,7 @@ a:hover {
 /* 2.小屏幕下*/
 @media screen and (min-width: 900px) {
   .layout_page {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
   }
 
   .recent-posts {
@@ -160,8 +161,9 @@ a:hover {
   }
 
   .aside-content {
-    width: 25% !important;
-    margin-top: 0px !important;
+    width: 100% !important;
+    margin-top: 20px !important;
+    padding: 0 !important;
   }
 
   /* .card-widget {
@@ -205,6 +207,7 @@ a:hover {
   .aside-content {
     width: 25% !important;
     margin-top: 0px !important;
+    padding: 0 15px !important;
   }
 
   /* .card-widget {
@@ -388,42 +391,7 @@ img {
   margin: 20px auto;
 }
 
-hr {
-  position: relative;
-  margin: 40px auto;
-  width: calc(100% - 4px);
-  border: 2px dashed #a4d8fa;
-  box-sizing: content-box;
-  height: 0;
-  overflow: visible;
-}
 
-hr:before {
-  position: absolute;
-  top: -10px;
-  left: 5%;
-  z-index: 1;
-  color: #49b1f5;
-  content: '\f0c4';
-  font-style: normal;
-  font-variant: normal;
-  font-size: 20px;
-  line-height: 1;
-  -webkit-transition: all 1s ease-in-out;
-  -moz-transition: all 1s ease-in-out;
-  -o-transition: all 1s ease-in-out;
-  -ms-transition: all 1s ease-in-out;
-  transition: all 1s ease-in-out;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  font-weight: normal;
-  font-family: FontAwesome;
-}
-
-hr:hover:before {
-  /* 计算元素宽度减少20设置给left */
-  left: calc(95% - 20px);
-}
 
 #mobile-sidebar #mobile-sidebar-menus .menus_items {
   margin-bottom: 5rem;
@@ -940,7 +908,7 @@ hr:hover:before {
 
 .recent-posts {
   width: 75%;
-  padding: 7.5px;
+  padding: 0 7.5px;
 }
 
 .post-item {
@@ -2349,3 +2317,42 @@ pre.hljs code {
   top: 20px;
   /* transition: top 0.3s; */
 }
+
+
+.scissorsHr {
+  position: relative;
+  margin: 20px auto;
+  width: calc(100% - 4px);
+  border: 2px dashed #a4d8fa;
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+
+.scissorsHr:before {
+  position: absolute;
+  top: -10px;
+  left: 5%;
+  z-index: 1;
+  color: #49b1f5;
+  content: '\f0c4';
+  font-style: normal;
+  font-variant: normal;
+  font-size: 20px;
+  line-height: 1;
+  -webkit-transition: all 1s ease-in-out;
+  -moz-transition: all 1s ease-in-out;
+  -o-transition: all 1s ease-in-out;
+  -ms-transition: all 1s ease-in-out;
+  transition: all 1s ease-in-out;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  font-weight: normal;
+  font-family: FontAwesome;
+}
+
+.scissorsHr:hover:before {
+  /* 计算元素宽度减少20设置给left */
+  left: calc(95% - 20px);
+}
+

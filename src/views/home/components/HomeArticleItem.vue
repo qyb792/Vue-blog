@@ -1,8 +1,8 @@
 <template>
-  <div class="post-item">
+  <div class="post-item" :class="index % 2 === 0 ? '' : 'right'">
     <!-- 首页文章展示头图 -->
     <div class="item-img">
-      <router-link :to="'/article/' + article.articleId">
+      <router-link :to="'/articles/' + article.id">
         <img class="img1" :src="article.articleCover" alt="文章头图" />
       </router-link>
     </div>
@@ -58,6 +58,9 @@ export default {
       type: Object,
       required: true,
     },
+    index: {
+      type: Number,
+    },
   },
 };
 </script>
@@ -97,6 +100,10 @@ export default {
   &:hover {
     -webkit-box-shadow: 0 4px 12px 12px rgba(7, 17, 27, 0.15);
     box-shadow: 0 4px 12px 12px rgba(7, 17, 27, 0.15);
+  }
+
+  &:hover .img1 {
+    transform: scale(1.1);
   }
 
   .item-img2 {
@@ -174,5 +181,8 @@ export default {
   .sticky {
     color: #ff7242 !important;
   }
+}
+.right {
+  flex-direction: row-reverse;
 }
 </style>

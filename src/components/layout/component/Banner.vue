@@ -122,7 +122,7 @@ export default {
         });
     },
     listHomeTalks() {
-      request('/home/talks').then((data) => {
+      request('/home/talks').then(({ data }) => {
         this.talkList = data;
       });
     },

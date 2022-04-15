@@ -68,9 +68,9 @@ service.interceptors.response.use(
   (response) => {
     nprogress.done();
     // axios默认加了一层data
-    const { data } = response.data;
+    // const { data } = response.data;
     //   要根据success的成功与否决定下面的操作
-    return data;
+    return response.data;
   },
   (error) => {
     Message.error(error.message); // 提示错误信息
