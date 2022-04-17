@@ -3,8 +3,8 @@
     <!-- banner -->
     <SmallBanner title="分类" :articleCover="cover" />
     <!-- 分类内容 -->
-    <main id="content-inner" class="layout_page">
-      <div id="category" class="category">
+    <main id="content-inner" class="layout">
+      <div id="post">
         <div class="category-lists">
           <div class="category-title is-center">
             分类 - <span class="category-amount">{{ count }}</span>
@@ -24,7 +24,7 @@
             </ul>
           </div>
         </div>
-        <hr class="scissorsHr" />
+        <hr class="scissors-hr" />
       </div>
       <!-- 右侧菜单 -->
       <aside-content />
@@ -64,7 +64,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#category {
+#post {
   .category-lists {
     padding: 1rem 0 1.5rem;
 
@@ -140,78 +140,4 @@ export default {
     }
   }
 }
-</style>
-
-// 自适应
-<style lang="less" scoped>
-.category {
-  -o-box-align: center;
-  align-items: center;
-  padding: 0;
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0 4px 8px 6px rgb(7 17 27 / 6%);
-  transition: all 0.3s;
-  padding: 50px 40px;
-}
-@media screen and (max-width: 900px) {
-  .layout {
-    flex-wrap: wrap;
-  }
-
-  #aside_content {
-    margin-top: 20px;
-    width: 100% !important;
-    .card-widget {
-      margin-left: 0 !important;
-      .card-content {
-        // .card-info-social-icons {
-        // }
-
-        .author-info-description {
-          font-size: 0.875rem;
-        }
-      }
-    }
-  }
-}
-
-@media screen and (min-width: 900px) {
-  #aside_content {
-    .card-widget {
-      margin-left: 0px !important;
-      // .card-content {
-      //   .card-info-social-icons {
-      //   }
-      // }
-    }
-  }
-}
-
-@media screen and (min-width: 992px) {
-  #aside_content {
-    .card-widget {
-      margin-left: 0px !important;
-      // .card-content {
-      //   .card-info-social-icons {
-      //   }
-      // }
-    }
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  #aside_content {
-    .card-widget {
-      margin-left: 0px !important;
-
-      .card-content {
-        padding: 20px 24px;
-        // .card-info-social-icons {
-        // }
-      }
-    }
-  }
-}
-
 </style>

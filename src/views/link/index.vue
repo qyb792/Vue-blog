@@ -1,190 +1,190 @@
 <template>
   <div>
     <!-- banner -->
-    <banner
-      :banner-title="'友情链接'"
-      :banner-img="'https://cdn.jsdelivr.net/gh/zytqyb/Image-hosting@master/hexo_blog_img/4.4t52zd5w6x40.jpg'"
-    />
-    <!-- 分类内容 -->
-    <main id="content-inner" class="layout_page">
-      <div id="link">
-        <h2><i class="iconfont iconlianjie link-title" /> 友情链接</h2>
-        <div class="flink-list">
-          <div v-for="item in friendLinkList" :key="item.id" class="flink-list-item">
-            <a
-              :href="item.linkAddress"
-              :title="item.linkName"
-              target="_blank"
-            ><img
-              :src="item.linkAvatar"
-              onerror="this.onerror=null;this.src='/img/friend_404.gif'"
-              :alt="item.linkName"
-            ><span class="flink-item-name">{{ item.linkName }}</span><span
-              class="flink-item-desc"
-              :title="item.linkIntro"
-            >{{ item.linkIntro }}</span></a>
-          </div>
+    <SmallBanner title="友情链接" :articleCover="cover" />
+    <!-- 链接列表 -->
+    <div class="layout">
+      <div id="post">
+        <div class="link-title mb-1">
+          <i class="iconfont iconlianjie" color="blue"></i> 大佬链接
         </div>
-
-        <h2><i class="el-icon-reading link-title" /> 添加友链</h2>
+        <el-row class="link-container">
+          <el-col
+            class="link-wrapper"
+            :lg="8"
+            :md="12"
+            :sm="24"
+            v-for="item of friendLinkList"
+            :key="item.id"
+          >
+            <a :href="item.linkAddress" target="_blank">
+              <el-avatar :size="65" class="link-avatar">
+                <img :src="item.linkAvatar" />
+              </el-avatar>
+              <div style="z-index: 10" class="info">
+                <div class="link-name">{{ item.linkName }}</div>
+                <div class="link-intro">{{ item.linkIntro }}</div>
+              </div>
+            </a>
+          </el-col>
+        </el-row>
+        <!-- 说明 -->
+        <div class="link-title" style="margin: 20px 0">
+          <i class="iconfont iconfenlei"></i> 添加友链
+        </div>
         <blockquote>
-          <div>名称：邱同学的小破站</div>
-          <div>简介：遇事不决， 可问春风</div>
-          <div>头像：头像链接</div>
-          <div>博客：博客链接</div>
+          <div>名称：{{ blogInfo.websiteConfig.websiteName }}</div>
+          <div>简介：{{ blogInfo.websiteConfig.websiteIntro }}</div>
+          <div>头像：{{ blogInfo.websiteConfig.websiteAvatar }}</div>
         </blockquote>
-
-        <div style="margin: 20px 0 !important">
-          需要交换友链的可在下方留言💖
-        </div>
-
-        <blockquote style="margin-bottom: 40px">
+        <div style="margin: 20px 0">需要交换友链的可在下方留言💖</div>
+        <blockquote style="margin: 20px 0">
           友链信息展示需要，你的信息格式要包含：名称、介绍、链接、头像
         </blockquote>
-        <hr>
+        <!-- 评论 -->
+        <Comment :type="this.commentType" />
       </div>
-      <!-- 右侧菜单 -->
+
       <aside-content />
-    </main>
+    </div>
   </div>
 </template>
 
 <script>
-import { getLinkList } from '@/api/link'
+import Comment from '@/components/Comment.vue';
+import request from '@/utils/request';
 export default {
-  data: function() {
-    return {
-      friendLinkList: [],
-      commentList: [],
-      count: 0
-    }
+  components: {
+    Comment,
   },
   created() {
-    this.getLinkList()
+    this.listFriendLink();
+  },
+  data: function () {
+    return {
+      friendLinkList: [],
+      commentType: 2,
+    };
   },
   methods: {
-    async getLinkList() {
-      const result = await getLinkList()
-      // console.log(result)
-      this.friendLinkList = result.data
-    }
-  }
-}
+    listFriendLink() {
+      request.get('/links').then(({ data }) => {
+        this.friendLinkList = data;
+      });
+    },
+  },
+  computed: {
+    blogInfo() {
+      return this.$store.state.blogInfo;
+    },
+    cover() {
+      var cover = '';
+      this.$store.state.blogInfo.pageList.forEach((item) => {
+        if (item.pageLabel === 'link') {
+          cover = item.pageCover;
+        }
+      });
+      return 'background: url(' + cover + ') center center / cover no-repeat';
+    },
+  },
+};
 </script>
 
-<style lang="scss" scoped>
-#link {
-  .link-title {
-    color: #2196f3 !important;
-    caret-color: #2196f3 !important;
-    font-size: 21px;
-    font-weight: bold;
-    line-height: 2;
+<style scoped>
+.info {
+  text-align: center;
+  width: 70%;
+}
+blockquote {
+  line-height: 2;
+  margin: 0;
+  font-size: 15px;
+  border-left: 0.2rem solid #49b1f5;
+  padding: 10px 1rem !important;
+  background-color: #ecf7fe;
+  border-radius: 4px;
+}
+.link-title {
+  color: #344c67;
+  font-size: 21px;
+  font-weight: bold;
+  line-height: 2;
+}
+.link-container {
+  margin: 10px 10px 0;
+}
+.link-wrapper {
+  position: relative;
+  transition: all 0.3s;
+  border-radius: 8px;
+  padding: 7.5px;
+}
+.link-avatar {
+  margin-top: 5px;
+  margin-left: 10px;
+  transition: all 0.5s;
+}
+@media (max-width: 759px) {
+  .link-avatar {
+    margin-left: 30px;
   }
+}
+.link-name {
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: bold;
+  z-index: 1000;
+}
+.link-intro {
+  text-align: center;
+  padding: 16px 10px;
+  height: 50px;
+  font-size: 13px;
+  color: #1f2d3d;
+  width: 100%;
+}
+.link-wrapper:hover a {
+  color: #fff;
+}
 
-  a {
-    color: #99a9bf;
-    text-decoration: none;
-    word-wrap: break-word;
-    -webkit-transition: all 0.2s;
-    -moz-transition: all 0.2s;
-    -o-transition: all 0.2s;
-    -ms-transition: all 0.2s;
-    transition: all 0.2s;
-    overflow-wrap: break-word;
-  }
+.link-wrapper:hover .link-intro {
+  color: #fff;
+}
+.link-wrapper:hover .link-avatar {
+  /* transform: rotate(360deg); */
+  width: 0 !important;
+  margin-left: -5px;
+}
 
-  .link-title {
-    margin: 16px 0 !important;
-  }
-  blockquote {
-    line-height: 2;
-    margin: 0;
-    font-size: 15px;
-    border-left: 0.2rem solid #49b1f5;
-    padding: 10px 1rem !important;
-    background-color: #ecf7fe;
-    border-radius: 4px;
-  }
+.link-wrapper:hover .info {
+  width: 100%;
+}
 
-  .flink-list {
-    overflow: auto;
-    padding: 10px 10px 0;
-    text-align: center;
-
-    .flink-list-item {
-      position: relative;
-      float: left;
-      overflow: hidden;
-      margin: 15px 7px;
-      width: calc(100% / 3 - 15px);
-      height: 90px;
-      border-radius: 8px;
-      line-height: 17px;
-      transform: translateZ(0);
-
-      &::before {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        z-index: -1;
-        background: #49b1f5;
-        content: '';
-        -webkit-transition: -webkit-transform 0.3s ease-out;
-        -moz-transition: -moz-transform 0.3s ease-out;
-        -o-transition: -o-transform 0.3s ease-out;
-        -ms-transition: -ms-transform 0.3s ease-out;
-        transition: transform 0.3s ease-out;
-        -webkit-transform: scale(0);
-        -moz-transform: scale(0);
-        -o-transform: scale(0);
-        -ms-transform: scale(0);
-        transform: scale(0);
-      }
-
-      &:hover::before {
-        transform: scale(1);
-      }
-
-      &:hover img {
-        transform: rotate(360deg);
-      }
-
-      a {
-        color: #4c4948;
-        text-decoration: none;
-
-        img {
-          float: left;
-          margin: 15px 10px;
-          width: 60px;
-          height: 60px;
-          border-radius: 35px;
-          -webkit-transition: all 0.3s;
-          -moz-transition: all 0.3s;
-          -o-transition: all 0.3s;
-          -ms-transition: all 0.3s;
-          transition: all 0.3s;
-        }
-
-        .flink-item-name {
-          display: block;
-          padding: 16px 10px 0 0;
-          height: 40px;
-          font-weight: bold;
-          font-size: 1.43em;
-        }
-
-        .flink-item-desc {
-          display: block;
-          padding: 16px 10px 16px 0;
-          height: 50px;
-          font-size: 0.93em;
-        }
-      }
-    }
-  }
+.link-wrapper a {
+  color: #333;
+  text-decoration: none;
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+.link-wrapper:hover {
+  box-shadow: 0 2px 20px #49b1f5;
+}
+.link-wrapper:hover:before {
+  transform: scale(1);
+}
+.link-wrapper:before {
+  position: absolute;
+  border-radius: 8px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: #49b1f5 !important;
+  content: '';
+  transition-timing-function: ease-out;
+  transition-duration: 0.3s;
+  transition-property: transform;
+  transform: scale(0);
 }
 </style>

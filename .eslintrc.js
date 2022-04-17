@@ -15,7 +15,9 @@ module.exports = {
     semi: [0, 'never'], // 不使用分号
     indent: [2, 2], // 相同的缩进2
     eqeqeq: 2, // 使用全等
+    'no-unused-vars': 'warn', // 不使用的变量
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off', // console在生产模式不生效
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off', // debugger在生产模式不生效
+    'vue/no-unused-components': 'off', // 组件不使用的时候不报错
   },
 };

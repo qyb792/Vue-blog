@@ -8,6 +8,9 @@ import VueImageSwipe from 'vue-image-swipe';
 import 'vue-image-swipe/dist/vue-image-swipe.css';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
+import Share from 'vue-social-share';
+import './assets/css/vue-social-share/client.css';
+import 'highlight.js/styles/atom-one-dark.css';
 
 import config from './assets/js/config';
 
@@ -18,17 +21,18 @@ import Component from '@/components';
 Vue.use(Component); // 注册自己的插件
 
 import { vueBaberrage } from 'vue-baberrage';
-Vue.use(vueBaberrage);
 
-Vue.use(VueImageSwipe);
-
-import '@/styles/index.css';
+import '@/styles/index.less';
 import '@/styles/darkmode.css'; // 夜间模式css
 import '@/assets/fonts/iconfont.css';
 import './plugins/element.js';
 import 'highlight.js/styles/atom-one-dark.css';
 import animated from 'animate.css';
 Vue.use(animated);
+Vue.use(vueBaberrage);
+
+Vue.use(VueImageSwipe);
+Vue.use(Share);
 
 Vue.prototype.config = config;
 

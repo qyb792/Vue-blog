@@ -139,7 +139,7 @@ export default {
     text-align: center;
 
     .article-title {
-      font-size: 40px;
+      font-size: 2.5rem;
       margin: 20px 0 8px;
     }
 

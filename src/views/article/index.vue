@@ -2,8 +2,13 @@
   <div>
     <!-- banner -->
     <!-- 封面图 -->
-    <SmallBanner :article="article" :articleValue="articleValue" :commentCount="commentCount" :articleCover="articleCover" />
-    <main class="layout">
+    <SmallBanner
+      :article="article"
+      :articleValue="articleValue"
+      :commentCount="commentCount"
+      :articleCover="articleCover"
+    />
+    <main id="content-inner" class="layout">
       <div id="post">
         <article
           id="write"
@@ -11,6 +16,143 @@
           v-html="article.articleContent"
           ref="article"
         />
+
+        <!-- 版权声明 -->
+        <div class="aritcle-copyright">
+          <div>
+            <span>文章作者：</span>
+            <router-link to="/">
+              {{ blogInfo.websiteConfig.websiteAuthor }}
+            </router-link>
+          </div>
+          <div>
+            <span>文章链接：</span>
+            <a :href="articleHref" target="_blank">{{ articleHref }} </a>
+          </div>
+          <div>
+            <span>版权声明：</span>本博客所有文章除特别声明外，均采用
+            <a
+              href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+              target="_blank"
+            >
+              CC BY-NC-SA 4.0
+            </a>
+            许可协议。转载请注明文章出处。
+          </div>
+        </div>
+
+        <!-- 转发 -->
+        <div class="article-operation">
+          <div class="tag-container">
+            <router-link
+              v-for="item of article.tagDTOList"
+              :key="item.id"
+              :to="'/tags/' + item.id"
+            >
+              {{ item.tagName }}
+            </router-link>
+          </div>
+          <share style="margin-left: auto" :config="config" />
+        </div>
+
+        <!-- 点赞打赏等 -->
+        <div class="article-reward">
+          <!-- 点赞按钮 -->
+          <a :class="isLike" @click="like">
+            <i size="14" class="iconfont icondianzan" color="#fff"></i> 点赞
+            <span v-show="article.likeCount > 0">{{ article.likeCount }}</span>
+          </a>
+          <a class="reward-btn" v-if="blogInfo.websiteConfig.isReward == 1">
+            <!-- 打赏按钮 -->
+            <i class="iconfont iconerweima" /> 打赏
+            <!-- 二维码 -->
+            <div class="animated fadeInDown reward-main">
+              <ul class="reward-all">
+                <li class="reward-item">
+                  <img
+                    class="reward-img"
+                    :src="blogInfo.websiteConfig.weiXinQRCode"
+                  />
+                  <div class="reward-desc">微信</div>
+                </li>
+                <li class="reward-item">
+                  <img
+                    class="reward-img"
+                    :src="blogInfo.websiteConfig.alipayQRCode"
+                  />
+                  <div class="reward-desc">支付宝</div>
+                </li>
+              </ul>
+            </div>
+          </a>
+        </div>
+
+        <!-- 上一篇 -->
+        <div class="pagination-post">
+          <div
+            :class="isFull(article.lastArticle.id)"
+            v-if="article.lastArticle.id"
+          >
+            <router-link :to="'/articles/' + article.lastArticle.id">
+              <img class="post-cover" :src="article.lastArticle.articleCover" />
+              <div class="post-info">
+                <div class="label">上一篇</div>
+                <div class="post-title">
+                  {{ article.lastArticle.articleTitle }}
+                </div>
+              </div>
+            </router-link>
+          </div>
+          <!-- 下一篇 -->
+          <div
+            :class="isFull(article.nextArticle.id)"
+            v-if="article.nextArticle.id"
+          >
+            <router-link :to="'/articles/' + article.nextArticle.id">
+              <img class="post-cover" :src="article.nextArticle.articleCover" />
+              <div class="post-info" style="text-align: right">
+                <div class="label">下一篇</div>
+                <div class="post-title">
+                  {{ article.nextArticle.articleTitle }}
+                </div>
+              </div>
+            </router-link>
+          </div>
+        </div>
+
+        <!-- 分割线 -->
+        <hr class="scissors-hr" style="margin: 40px 0" />
+
+        <!-- 推荐文章 -->
+        <div
+          class="recommend-container"
+          v-if="article.recommendArticleList.length"
+        >
+          <div class="recommend-title">
+            <v-icon size="20" color="#4c4948">mdi-thumb-up</v-icon> 相关推荐
+          </div>
+          <div class="recommend-list">
+            <div
+              class="recommend-item"
+              v-for="item of article.recommendArticleList"
+              :key="item.id"
+            >
+              <router-link :to="'/articles/' + item.id">
+                <img class="recommend-cover" :src="item.articleCover" />
+                <div class="recommend-info">
+                  <div class="recommend-date">
+                    <i class="iconfont iconrili" />
+                    {{ item.createTime | date }}
+                  </div>
+                  <div>{{ item.articleTitle }}</div>
+                </div>
+              </router-link>
+            </div>
+          </div>
+        </div>
+
+        <!-- 评论 -->
+        <comment :type="commentType" @getCommentCount="getCommentCount" />
       </div>
       <div id="aside-content">
         <!-- 博主信息 -->
@@ -125,7 +267,7 @@
           <!-- 最新文章 -->
           <div class="card-widget">
             <div class="card-content">
-              <div class="item-headline">
+              <div class="item-headline" style="margin-bottom: 5px">
                 <i class="iconfont icongengxinshijian" />
                 <span>最新文章</span>
               </div>
@@ -196,11 +338,13 @@ import Clipboard from 'clipboard';
 import tocbot from 'tocbot';
 import SmallBanner from '@/components/layout/component/SmallBanner';
 import { getIdArticle } from '@/api/article';
+import Comment from '@/components/Comment';
 
 import request from '@/utils/request';
 export default {
   components: {
     SmallBanner,
+    Comment,
   },
   created() {
     this.getArticle();
@@ -272,7 +416,8 @@ export default {
             this.article.articleContent
           ).length;
           // 计算阅读时间
-          this.articleValue.readTime = Math.round(this.articleValue.wordNum / 400) + '分钟';
+          this.articleValue.readTime =
+            Math.round(this.articleValue.wordNum / 400) + '分钟';
           // 添加代码复制功能
           this.clipboard = new Clipboard('.copy-btn');
           this.clipboard.on('success', () => {
@@ -434,6 +579,397 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.layout {
+  #post {
+    .aritcle-copyright {
+      position: relative;
+      margin-top: 40px;
+      margin-bottom: 10px;
+      font-size: 0.875rem;
+      line-height: 2;
+      padding: 0.625rem 1rem;
+      border: 1px solid #eee;
+
+      span {
+        color: #49b1f5;
+        font-weight: bold;
+      }
+
+      a {
+        text-decoration: underline !important;
+        color: #99a9bf;
+
+        &:hover {
+          color: #49b1f5;
+        }
+      }
+
+      &:before {
+        position: absolute;
+        top: 0.7rem;
+        right: 0.7rem;
+        width: 1rem;
+        height: 1rem;
+        border-radius: 1rem;
+        background: #49b1f5;
+        content: '';
+      }
+
+      &:after {
+        position: absolute;
+        top: 0.95rem;
+        right: 0.95rem;
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 0.5em;
+        background: #fff;
+        content: '';
+      }
+    }
+
+    .article-operation {
+      display: flex;
+      align-items: center;
+      .tag-container a {
+        display: inline-block;
+        margin: 0.5rem 0.5rem 0.5rem 0;
+        padding: 0 0.75rem;
+        width: fit-content;
+        border: 1px solid #49b1f5;
+        border-radius: 1rem;
+        color: #49b1f5 !important;
+        font-size: 12px;
+        line-height: 2;
+      }
+      .tag-container a:hover {
+        color: #fff !important;
+        background: #49b1f5;
+        transition: all 0.5s;
+      }
+    }
+
+    .article-reward {
+      margin-top: 5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .reward-btn {
+        position: relative;
+        display: inline-block;
+        width: 100px;
+        background: #49b1f5;
+        margin: 0 1rem;
+        color: #fff !important;
+        text-align: center;
+        line-height: 36px;
+        font-size: 0.875rem;
+
+        &:hover {
+          background: #ec7259;
+        }
+      }
+      .reward-btn:hover .reward-main {
+        display: block;
+      }
+      .reward-main {
+        display: none;
+        position: absolute;
+        bottom: 40px;
+        left: 0;
+        margin: 0;
+        padding: 0 0 15px;
+        width: 100%;
+      }
+      .reward-all {
+        display: inline-block;
+        margin: 0 0 0 -110px;
+        padding: 20px 10px 8px !important;
+        width: 320px;
+        border-radius: 4px;
+        background: #f5f5f5;
+      }
+      .reward-all:before {
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 100%;
+        height: 20px;
+        content: '';
+      }
+      .reward-all:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        bottom: 2px;
+        left: 0;
+        margin: 0 auto;
+        width: 0;
+        height: 0;
+        border-top: 13px solid #f5f5f5;
+        border-right: 13px solid transparent;
+        border-left: 13px solid transparent;
+      }
+      .reward-item {
+        display: inline-block;
+        padding: 0 8px;
+        list-style-type: none;
+      }
+      .reward-img {
+        width: 130px;
+        height: 130px;
+        display: block;
+      }
+      .reward-desc {
+        margin: -5px 0;
+        color: #858585;
+        text-align: center;
+      }
+      .like-btn {
+        display: inline-block;
+        width: 100px;
+        background: #969696;
+        color: #fff !important;
+        text-align: center;
+        line-height: 36px;
+        font-size: 0.875rem;
+      }
+      .like-btn-active {
+        display: inline-block;
+        width: 100px;
+        background: #ec7259;
+        color: #fff !important;
+        text-align: center;
+        line-height: 36px;
+        font-size: 0.875rem;
+      }
+    }
+
+    .recommend-container {
+      margin-top: 40px;
+    }
+
+    .pagination-post {
+      margin-top: 40px;
+      overflow: hidden;
+      width: 100%;
+      background: #000;
+      .post {
+        position: relative;
+        height: 150px;
+        overflow: hidden;
+      }
+      .post-info {
+        position: absolute;
+        top: 50%;
+        padding: 20px 40px;
+        width: 100%;
+        transform: translate(0, -50%);
+        line-height: 2;
+        font-size: 14px;
+      }
+
+      .post-cover {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0.4;
+        transition: all 0.6s;
+        object-fit: cover;
+      }
+      .post a {
+        position: relative;
+        display: block;
+        overflow: hidden;
+        height: 150px;
+      }
+      .post:hover .post-cover {
+        opacity: 0.8;
+        transform: scale(1.1);
+      }
+      .label {
+        font-size: 90%;
+        color: #eee;
+      }
+      .post-title {
+        font-weight: 500;
+        color: #fff;
+      }
+
+      .full {
+        width: 100% !important;
+      }
+    }
+  }
+}
+
+@media (min-width: 760px) {
+  .article-info span {
+    font-size: 95%;
+  }
+  .article-info-container {
+    position: absolute;
+    bottom: 6.25rem;
+    padding: 0 8%;
+    width: 100%;
+    text-align: center;
+  }
+  .second-line,
+  .third-line {
+    display: inline;
+  }
+  .article-title {
+    font-size: 35px;
+    margin: 20px 0 8px;
+  }
+  .pagination-post {
+    display: flex;
+  }
+  .post {
+    width: 50%;
+  }
+  .recommend-item {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    margin: 3px;
+    width: calc(33.333% - 6px);
+    height: 200px;
+    background: #000;
+    vertical-align: bottom;
+  }
+}
+@media (max-width: 759px) {
+  .article-info span {
+    font-size: 90%;
+  }
+  .separator:first-child {
+    display: none;
+  }
+  .blog-container {
+    margin: 322px 5px 0 5px;
+  }
+  .article-info-container {
+    position: absolute;
+    bottom: 1.3rem;
+    padding: 0 5%;
+    width: 100%;
+    color: #eee;
+    text-align: left;
+  }
+  .article-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.4rem;
+  }
+  .post {
+    width: 100%;
+  }
+  .pagination-post {
+    display: block;
+  }
+  .recommend-item {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    margin: 3px;
+    width: calc(100% - 4px);
+    height: 150px;
+    margin: 2px;
+    background: #000;
+    vertical-align: bottom;
+  }
+}
+</style>
+
+<style lang="scss">
+pre.hljs {
+  padding: 12px 2px 12px 40px !important;
+  border-radius: 5px !important;
+  position: relative;
+  font-size: 14px !important;
+  line-height: 22px !important;
+  overflow: hidden !important;
+  &:hover .copy-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  code {
+    display: block !important;
+    margin: 0 10px !important;
+    overflow-x: auto !important;
+    &::-webkit-scrollbar {
+      z-index: 11;
+      width: 6px;
+    }
+    &::-webkit-scrollbar:horizontal {
+      height: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 5px;
+      width: 6px;
+      background: #666;
+    }
+    &::-webkit-scrollbar-corner,
+    &::-webkit-scrollbar-track {
+      background: #1e1e1e;
+    }
+    &::-webkit-scrollbar-track-piece {
+      background: #1e1e1e;
+      width: 6px;
+    }
+  }
+  .line-numbers-rows {
+    position: absolute;
+    pointer-events: none;
+    top: 12px;
+    bottom: 12px;
+    left: 0;
+    font-size: 100%;
+    width: 40px;
+    text-align: center;
+    letter-spacing: -1px;
+    border-right: 1px solid rgba(0, 0, 0, 0.66);
+    user-select: none;
+    counter-reset: linenumber;
+    span {
+      pointer-events: none;
+      display: block;
+      counter-increment: linenumber;
+      &:before {
+        content: counter(linenumber);
+        color: #999;
+        display: block;
+        text-align: center;
+      }
+    }
+  }
+  b.name {
+    position: absolute;
+    top: 7px;
+    right: 45px;
+    z-index: 1;
+    color: #999;
+    pointer-events: none;
+  }
+  .copy-btn {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    z-index: 1;
+    color: #ccc;
+    background-color: #525252;
+    border-radius: 6px;
+    display: none;
+    font-size: 14px;
+    width: 32px;
+    height: 24px;
+    outline: none;
+  }
+}
+</style>
+
+<style lang="less" scoped>
 @keyframes header-effect {
   0% {
     opacity: 0;
@@ -499,525 +1035,5 @@ export default {
       font-size: 95%;
     }
   }
-}
-
-@media screen and (max-width: 900px) {
-  .layout_post {
-    flex-wrap: wrap;
-  }
-
-  #post {
-    width: 100% !important;
-  }
-}
-</style>
-
-<style lang="scss">
-pre.hljs {
-  padding: 12px 2px 12px 40px !important;
-  border-radius: 5px !important;
-  position: relative;
-  font-size: 14px !important;
-  line-height: 22px !important;
-  overflow: hidden !important;
-  &:hover .copy-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  code {
-    display: block !important;
-    margin: 0 10px !important;
-    overflow-x: auto !important;
-    &::-webkit-scrollbar {
-      z-index: 11;
-      width: 6px;
-    }
-    &::-webkit-scrollbar:horizontal {
-      height: 6px;
-    }
-    &::-webkit-scrollbar-thumb {
-      border-radius: 5px;
-      width: 6px;
-      background: #666;
-    }
-    &::-webkit-scrollbar-corner,
-    &::-webkit-scrollbar-track {
-      background: #1e1e1e;
-    }
-    &::-webkit-scrollbar-track-piece {
-      background: #1e1e1e;
-      width: 6px;
-    }
-  }
-  .line-numbers-rows {
-    position: absolute;
-    pointer-events: none;
-    top: 12px;
-    bottom: 12px;
-    left: 0;
-    font-size: 100%;
-    width: 40px;
-    text-align: center;
-    letter-spacing: -1px;
-    border-right: 1px solid rgba(0, 0, 0, 0.66);
-    user-select: none;
-    counter-reset: linenumber;
-    span {
-      pointer-events: none;
-      display: block;
-      counter-increment: linenumber;
-      &:before {
-        content: counter(linenumber);
-        color: #999;
-        display: block;
-        text-align: center;
-      }
-    }
-  }
-  b.name {
-    position: absolute;
-    top: 7px;
-    right: 45px;
-    z-index: 1;
-    color: #999;
-    pointer-events: none;
-  }
-  .copy-btn {
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    z-index: 1;
-    color: #ccc;
-    background-color: #525252;
-    border-radius: 6px;
-    display: none;
-    font-size: 14px;
-    width: 32px;
-    height: 24px;
-    outline: none;
-  }
-}
-</style>
-
-<style lang="less" scoped>
-.layout {
-  display: flex;
-  box-flex: 1;
-  flex: 1 auto;
-  margin: 0 auto;
-  padding: 40px 15px;
-  max-width: 1200px;
-  width: 100%;
-
-  & > #post {
-    border-radius: 8px;
-    background: #fff;
-    box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.05);
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    -ms-transition: all 0.3s;
-    transition: all 0.3s;
-    width: 74%;
-    align-self: flex-start;
-    -ms-flex-item-align: start;
-    padding: 50px 40px;
-  }
-
-  & > #aside-content {
-    width: 26%;
-  }
-}
-
-@media screen and (min-width: 900px) {
-  #aside-content {
-    padding-left: 15px;
-  }
-}
-</style>
-
-<style lang="scss">
-pre.hljs {
-  padding: 12px 2px 12px 40px !important;
-  border-radius: 5px !important;
-  position: relative;
-  font-size: 14px !important;
-  line-height: 22px !important;
-  overflow: hidden !important;
-  &:hover .copy-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  code {
-    display: block !important;
-    margin: 0 10px !important;
-    overflow-x: auto !important;
-    &::-webkit-scrollbar {
-      z-index: 11;
-      width: 6px;
-    }
-    &::-webkit-scrollbar:horizontal {
-      height: 6px;
-    }
-    &::-webkit-scrollbar-thumb {
-      border-radius: 5px;
-      width: 6px;
-      background: #666;
-    }
-    &::-webkit-scrollbar-corner,
-    &::-webkit-scrollbar-track {
-      background: #1e1e1e;
-    }
-    &::-webkit-scrollbar-track-piece {
-      background: #1e1e1e;
-      width: 6px;
-    }
-  }
-  .line-numbers-rows {
-    position: absolute;
-    pointer-events: none;
-    top: 12px;
-    bottom: 12px;
-    left: 0;
-    font-size: 100%;
-    width: 40px;
-    text-align: center;
-    letter-spacing: -1px;
-    border-right: 1px solid rgba(0, 0, 0, 0.66);
-    user-select: none;
-    counter-reset: linenumber;
-    span {
-      pointer-events: none;
-      display: block;
-      counter-increment: linenumber;
-      &:before {
-        content: counter(linenumber);
-        color: #999;
-        display: block;
-        text-align: center;
-      }
-    }
-  }
-  b.name {
-    position: absolute;
-    top: 7px;
-    right: 45px;
-    z-index: 1;
-    color: #999;
-    pointer-events: none;
-  }
-  .copy-btn {
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    z-index: 1;
-    color: #ccc;
-    background-color: #525252;
-    border-radius: 6px;
-    display: none;
-    font-size: 14px;
-    width: 32px;
-    height: 24px;
-    outline: none;
-  }
-}
-</style>
-
-// 自适应
-<style lang="less" scoped>
-@media screen and (max-width: 900px) {
-  .layout {
-    flex-wrap: wrap;
-  }
-
-  #aside-content {
-    margin-top: 20px;
-    width: 100% !important;
-    .card-widget {
-      margin-left: 0 !important;
-      .card-content {
-        // .card-info-social-icons {
-        // }
-
-        .author-info-description {
-          font-size: 0.875rem;
-        }
-      }
-    }
-  }
-}
-
-@media screen and (min-width: 900px) {
-  #aside-content {
-    .card-widget {
-      margin-left: 0px !important;
-      // .card-content {
-      //   .card-info-social-icons {
-      //   }
-      // }
-    }
-  }
-}
-
-@media screen and (min-width: 992px) {
-  #aside-content {
-    .card-widget {
-      margin-left: 0px !important;
-      // .card-content {
-      //   .card-info-social-icons {
-      //   }
-      // }
-    }
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  #aside-content {
-    .card-widget {
-      margin-left: 0px !important;
-
-      .card-content {
-        padding: 20px 24px;
-        // .card-info-social-icons {
-        // }
-      }
-    }
-  }
-}
-</style>
-
-// 右侧菜单栏
-<style lang="less" scoped>
-#aside-content {
-  line-height: 2;
-  color: #4c4948;
-  .author-wrapper {
-    text-align: center;
-    .v-avatar {
-      height: 110px;
-      min-width: 110px;
-      width: 110px;
-      align-items: center;
-      border-radius: 50%;
-      display: inline-flex;
-      justify-content: center;
-      line-height: normal;
-      position: relative;
-      text-align: center;
-      vertical-align: middle;
-      overflow: hidden;
-
-      .author-avatar {
-        transition: all 0.5s;
-        border-radius: inherit;
-        display: inline-flex;
-        height: inherit;
-        width: inherit;
-
-        &:hover {
-          -webkit-transform: rotateZ(540deg);
-          -moz-transform: rotateZ(540deg);
-          -o-transform: rotateZ(540deg);
-          -ms-transform: rotateZ(540deg);
-          transform: rotateZ(540deg);
-        }
-      }
-    }
-  }
-
-  .author-info-name {
-    font-size: 1.375rem;
-    margin-top: 0.625rem;
-  }
-
-  .card-info-data {
-    padding: 14px 0;
-    display: flex;
-
-    .card-info-data-item {
-      flex: 1;
-
-      .headline {
-        display: block;
-        overflow: hidden;
-        color: #4c4948;
-        text-overflow: ellipsis;
-        font-size: 0.875rem;
-      }
-
-      .length-num {
-        color: #000;
-        font-size: 1.25rem;
-      }
-    }
-  }
-
-  .card-widget {
-    overflow: hidden;
-    border-radius: 8px;
-    background: #fff;
-    -webkit-box-shadow: 0 4px 8px 6px rgba(7, 17, 27, 0.06);
-    box-shadow: 0 4px 8px 6px rgba(7, 17, 27, 0.06);
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    -ms-transition: all 0.3s;
-    transition: all 0.3s;
-    margin-bottom: 20px;
-    .card-content {
-      .item-headline {
-        font-size: 1rem;
-
-        .card-announcement-animation {
-          font-size: 18px;
-          color: #f00 !important;
-          -webkit-animation: announ_animation 0.8s linear infinite;
-          -moz-animation: announ_animation 0.8s linear infinite;
-          -o-animation: announ_animation 0.8s linear infinite;
-          -ms-animation: announ_animation 0.8s linear infinite;
-          animation: announ_animation 0.8s linear infinite;
-        }
-        & > span {
-          margin-left: 10px;
-        }
-      }
-      padding: 20px 24px;
-      .card-info-social-icons {
-        margin: 6px 0 -12px;
-
-        & > a:hover {
-          color: #4c4948;
-        }
-
-        .social-icon {
-          margin: 0 10px;
-          color: #4c4948;
-          font-size: 1.5rem;
-
-          & > i {
-            -webkit-transition: all 0.3s;
-            -moz-transition: all 0.3s;
-            -o-transition: all 0.3s;
-            -ms-transition: all 0.3s;
-            transition: all 0.3s;
-            display: inline-block;
-
-            &:hover {
-              -webkit-transform: rotateZ(540deg);
-              -moz-transform: rotateZ(540deg);
-              -o-transform: rotateZ(540deg);
-              -ms-transform: rotateZ(540deg);
-              transform: rotateZ(540deg);
-            }
-          }
-        }
-      }
-
-      .bookmarkwai {
-        .bookmark {
-          text-align: center;
-          z-index: 1;
-          font-size: 14px;
-          position: relative;
-          display: block;
-          background-color: #49b1f5;
-          color: #fff !important;
-          height: 32px;
-          line-height: 32px;
-          transition-duration: 1s;
-          transition-property: color;
-        }
-      }
-    }
-  }
-}
-.card-webinfo {
-  .webinfo {
-    padding: 0.25rem;
-    font-size: 0.875rem;
-
-    .webinfo-item {
-      display: flex;
-      justify-content: space-between;
-    }
-  }
-}
-
-.sticky_layout {
-  position: sticky;
-  position: -webkit-sticky;
-  top: px;
-  -webkit-transition: top 0.3s;
-  -moz-transition: top 0.3s;
-  -o-transition: top 0.3s;
-  -ms-transition: top 0.3s;
-  transition: top 0.3s;
-}
-
-.article-list {
-  img {
-    width: 100%;
-    height: 100%;
-    transition: all 0.6s;
-    object-fit: cover;
-
-    &:hover {
-      transform: scale(1.1);
-    }
-  }
-
-  .content-title a {
-    transition: all 0.2s;
-    font-size: 100%;
-    color: #4c4948;
-    text-decoration: none;
-    &:hover {
-      color: #2ba1d1;
-    }
-  }
-  .article-item {
-    display: flex;
-    align-items: center;
-    padding: 6px 0;
-
-    &:first-child {
-      padding-top: 0;
-    }
-    &:last-child {
-      padding-bottom: 0;
-    }
-    &:not(:last-child) {
-      border-bottom: 1px dashed #f5f5f5;
-    }
-  }
-
-  .content {
-    flex: 1;
-    padding-left: 10px;
-    word-break: break-all;
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-  }
-  .content-cover {
-    width: 58.8px;
-    height: 58.8px;
-    overflow: hidden;
-
-    & > a {
-      transition: all 0.2s;
-      font-size: 95%;
-      &:hover {
-        color: #2ba1d1;
-      }
-    }
-  }
-}
-.content-time {
-  color: #858585;
-  font-size: 85%;
-  line-height: 2;
 }
 </style>

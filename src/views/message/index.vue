@@ -1,8 +1,9 @@
 <template>
   <div>
     <!-- banner -->
-    <div class="message-banner">
+    <div class="message-banner" :style="cover">
       <!-- 弹幕输入框 -->
+
       <div class="message-container">
         <h1 class="message-title">留言板</h1>
         <div class="animated fadeInUp message-input-wrapper">
@@ -10,7 +11,8 @@
             v-model="messageContent"
             placeholder="说点什么吧"
             @click="show = true"
-          >
+            @keyup.enter="addToList"
+          />
           <button
             v-show="show"
             class="ml-3 animate__animated animate__backInLeft"
@@ -22,15 +24,15 @@
       </div>
       <!-- 弹幕列表 -->
       <div class="barrage-container">
-        <vue-baberrage :barrage-list="barrageList" :loop="true">
+        <vue-baberrage :barrageList="barrageList" :loop="true">
           <template v-slot:default="slotProps">
             <span class="barrage-items">
               <img
                 :src="slotProps.item.avatar"
                 width="30"
                 height="30"
-                style="border-radius:50%"
-              >
+                style="border-radius: 50%"
+              />
               <span class="ml-2">{{ slotProps.item.nickname }} :</span>
               <span class="ml-2">{{ slotProps.item.messageContent }}</span>
             </span>
@@ -42,65 +44,69 @@
 </template>
 
 <script>
-import { getMessageList, addMessages } from '@/api/message';
+import request from '@/utils/request';
 export default {
+  mounted() {
+    this.listMessage();
+  },
   data() {
     return {
       show: false,
       messageContent: '',
-      barrageList: []
+      barrageList: [],
     };
-  },
-  mounted() {
-    this.listMessage();
   },
   methods: {
     addToList() {
       if (this.messageContent.trim() === '') {
-        this.$message.error('留言不能为空');
+        this.$message({ type: 'error', message: '留言不能为空' });
         return false;
       }
-      const userAvatar = this.$store.getters.loginAvatar
-        ? this.$store.getters.loginAvatar
-        : 'https://cdn.jsdelivr.net/gh/zytqyb/Image-hosting@master/hexo_blog_img/y8qpqk.3hdi9olrkc80.jpg';
-      const userNickname = this.$store.getters.loginNickname
-        ? this.$store.getters.loginNickname
+      const userAvatar = this.$store.state.avatar
+        ? this.$store.state.avatar
+        : this.$store.state.blogInfo.websiteConfig.touristAvatar;
+      const userNickname = this.$store.state.nickname
+        ? this.$store.state.nickname
         : '游客';
       var message = {
         avatar: userAvatar,
         nickname: userNickname,
         messageContent: this.messageContent,
-        time: Math.floor(Math.random() * 10 + 3)
+        time: Math.floor(Math.random() * (10 - 7)) + 7,
       };
       this.barrageList.push(message);
       this.messageContent = '';
-      addMessages(message);
+      request.post('/messages', message);
     },
-    async listMessage() {
-      const result = await getMessageList();
-      if (result.success) {
-        this.barrageList = result.data;
-      }
-    }
-  }
+    listMessage() {
+      request.get('/messages').then((data) => {
+        if (data.flag) {
+          this.barrageList = data.data;
+        }
+      });
+    },
+  },
+  computed: {
+    cover() {
+      var cover = '';
+      this.$store.state.blogInfo.pageList.forEach((item) => {
+        if (item.pageLabel === 'message') {
+          cover = item.pageCover;
+        }
+      });
+      return 'background: url(' + cover + ') center center / cover no-repeat';
+    },
+  },
 };
 </script>
 
-<style>
-.ismessage {
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  background: rgba(0, 0, 0, 0);
-}
-
+<style scoped>
 .message-banner {
   position: absolute;
+  top: 0px;
   left: 0;
   right: 0;
   height: 100vh;
-  background: url(https://cdn.jsdelivr.net/gh/zytqyb/Image-hosting@master/hexo_blog_img/2.ltk83vjvvlc.jpg) center center /
-    cover no-repeat;
   background-color: #49b1f5;
   animation: header-effect 1s;
 }
@@ -127,11 +133,11 @@ export default {
 }
 .message-input-wrapper input {
   outline: none;
-  width: 252px;
+  width: 70%;
   border-radius: 20px;
-  height: 40px;
+  height: 100%;
   padding: 0 1.25rem;
-  color: #fff;
+  color: #eee;
   border: #fff 1px solid;
   background: transparent;
 }
@@ -139,13 +145,14 @@ export default {
   color: #eeee;
 }
 .message-input-wrapper button {
+  outline: none;
   border-radius: 20px;
-  width: 70px;
-  height: 40px;
-  margin-left: 20px;
-  color: #fff;
-  border: 1px #fff solid;
+  height: 100%;
+  padding: 0 1.25rem;
+  border: #fff 1px solid;
   background: transparent;
+  color: #eee;
+  margin-left: 20px;
 }
 .barrage-container {
   position: absolute;
@@ -163,13 +170,5 @@ export default {
   padding: 5px 10px 5px 5px;
   align-items: center;
   display: flex;
-}
-
-#footer {
-  position: absolute !important;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  background: rgba(0, 0, 0, 0);
 }
 </style>

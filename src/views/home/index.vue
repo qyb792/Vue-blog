@@ -5,14 +5,12 @@
       :banner-title="blogInfo.websiteConfig.websiteName"
       :banner-img="blogInfo.websiteConfig.websiteName"
     />
-    <main id="content-inner" class="layout_page">
-      <!-- 文章展示模块外部容器 -->
+    <main id="content-inner" class="layout">
       <div class="recent-posts">
         <div class="animated zoomIn card" v-if="talkList.length > 0">
           <Swiper :list="talkList" />
         </div>
 
-        <!-- 首页文章列表展示 -->
         <HomeArticleItem
           v-for="(article, i) in articleList"
           :key="article.articleId"
@@ -29,6 +27,28 @@
           @current-change="handleCurrentChange"
         />
       </div>
+      <!-- 文章展示模块外部容器 -->
+      <!-- <div class="recent-posts">
+        <div class="animated zoomIn card" v-if="talkList.length > 0">
+          <Swiper :list="talkList" />
+        </div>
+
+        <HomeArticleItem
+          v-for="(article, i) in articleList"
+          :key="article.articleId"
+          :article="article"
+          :index="i"
+        />
+
+        <el-pagination
+          :current-page.sync="current"
+          :page-size="10"
+          background
+          layout="prev, pager, next, jumper"
+          :total="this.blogInfo.articleCount"
+          @current-change="handleCurrentChange"
+        />
+      </div> -->
       <!-- 右侧菜单 -->
       <aside-content />
     </main>

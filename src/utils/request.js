@@ -1,10 +1,10 @@
 import axios from 'axios';
-
+import Vue from 'vue';
 import { Message } from 'element-ui';
 // 引入进度条
 import nprogress from 'nprogress';
 // 引入进度条样式
-import 'nprogress/nprogress.css'
+import 'nprogress/nprogress.css';
 
 const service = axios.create({
   // 当执行 npm run dev  => .evn.development => /api => 跨域代理
@@ -12,33 +12,34 @@ const service = axios.create({
   timeout: 5000, // 设置超时时间
 });
 
-
 //请求拦截器
-service.interceptors.request.use((config)=>{
-  //config 配置对象 对象有一个属性很重要 headers
-  // const token = localStorage.getItem("TOKEN");
-  // if(token){
-  //   config.headers.token= token;  
-  // }
-  nprogress.start();
-  //添加时间戳
-  // if (config.method === 'post') {
-  //   config.data = {
-  //     ...config.data,
-  //     _t: Date.parse(new Date()) / 1000
-  //   }
-  // } else if (config.method ==='get') {
-  //   config.params = {
-  //     _t: Date.parse(new Date()) / 1000,
-  //     ...config.params
-  //   }
-  // }
-  return config;
-},error => {
-  console.log(error)
-  return Promise.reject(error)
-});
-
+service.interceptors.request.use(
+  (config) => {
+    //config 配置对象 对象有一个属性很重要 headers
+    // const token = localStorage.getItem("TOKEN");
+    // if(token){
+    //   config.headers.token= token;
+    // }
+    nprogress.start();
+    //添加时间戳
+    // if (config.method === 'post') {
+    //   config.data = {
+    //     ...config.data,
+    //     _t: Date.parse(new Date()) / 1000
+    //   }
+    // } else if (config.method ==='get') {
+    //   config.params = {
+    //     _t: Date.parse(new Date()) / 1000,
+    //     ...config.params
+    //   }
+    // }
+    return config;
+  },
+  (error) => {
+    console.log(error);
+    return Promise.reject(error);
+  }
+);
 
 // // 请求拦截器
 // service.interceptors.request.use(
@@ -66,10 +67,12 @@ service.interceptors.request.use((config)=>{
 // 响应拦截器
 service.interceptors.response.use(
   (response) => {
+    switch (response.data.code) {
+    case 50000:
+      Vue.prototype.$message({ type: 'error', message: '系统异常' });
+    }
     nprogress.done();
-    // axios默认加了一层data
-    // const { data } = response.data;
-    //   要根据success的成功与否决定下面的操作
+
     return response.data;
   },
   (error) => {

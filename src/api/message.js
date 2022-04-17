@@ -1,19 +1,18 @@
-import request from '@/utils/request'
+import request from '@/utils/request';
 
 // 获取留言列表
 export function getMessageList() {
   // 返回一个axios对象 => promise
   return request({
-    url: '/message/getMessageList'
-  })
+    url: '/message',
+  });
 }
 
-export function addMessages(message) {
-  // 返回一个axios对象 => promise
-  return request({
-    url: '/message/messages',
-    method: 'post',
-    data: message
-  })
-}
-
+// export function addMessages(message) {
+//   // 返回一个axios对象 => promise
+//   return request({
+//     url: '/messages',
+//     method: 'post',
+//     data: message,
+//   });
+// }

@@ -32,20 +32,20 @@ export default {
                 //保存登录状态
                 that.$store.commit('login', data.data);
                 if (data.data.email === null) {
-                  that.$toast({
+                  that.$message({
                     type: 'warnning',
                     message: '请绑定邮箱以便及时收到回复'
                   });
                 } else {
-                  that.$toast({ type: 'success', message: data.message });
+                  that.$message({ type: 'success', message: data.message });
                 }
               } else {
-                that.$toast({ type: 'error', message: data.message });
+                that.$message({ type: 'error', message: data.message });
               }
             });
         });
       } else {
-        that.$toast({ type: 'error', message: data.message });
+        that.$message({ type: 'error', message: data.message });
       }
     } else {
       that.axios
@@ -55,15 +55,15 @@ export default {
             //保存登录状态
             that.$store.commit('login', data.data);
             if (data.data.email === null) {
-              that.$toast({
+              that.$message({
                 type: 'warnning',
                 message: '请绑定邮箱以便及时收到回复'
               });
             } else {
-              that.$toast({ type: 'success', message: data.message });
+              that.$message({ type: 'success', message: data.message });
             }
           } else {
-            that.$toast({ type: 'error', message: data.message });
+            that.$message({ type: 'error', message: data.message });
           }
         });
     }

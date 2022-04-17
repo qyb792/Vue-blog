@@ -8,10 +8,15 @@
     <!-- 回到顶部等工具 -->
     <back-top />
     <!-- 网站底部 -->
-    <Footer />
+    <Footer v-if="isShow" />
     <Aplayer v-if="blogInfo.websiteConfig.isMusicPlayer == 1" />
 
     <LoginModel />
+
+    <!-- 注册模态框 -->
+    <RegisterModel />
+    <!-- 找回密码模态框 -->
+    <ForgetModel />
 
     <SearchModel />
   </div>
@@ -25,6 +30,8 @@ import Footer from '@/components/layout/component/Footer';
 import Aplayer from '@/components/aplayer';
 import LoginModel from '@/components/model/LoginModel';
 import SearchModel from '@/components/model/SearchModel';
+import RegisterModel from '@/components/model/RegisterModel';
+import ForgetModel from '@/components/model/ForgetModel';
 
 export default {
   components: {
@@ -35,6 +42,8 @@ export default {
     Aplayer,
     LoginModel,
     SearchModel,
+    RegisterModel,
+    ForgetModel,
   },
   data() {
     return {
@@ -47,9 +56,9 @@ export default {
     blogInfo() {
       return this.$store.state.blogInfo;
     },
-  },
-  created() {
-    // this.$store.dispatch('blog/getBlogInfo')
+    isShow() {
+      return this.$route.name !== 'message';
+    },
   },
   methods: {
     isLogin() {
@@ -60,7 +69,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
 .login-btn {
   width: 100%;
   margin-top: 20px !important;

@@ -110,8 +110,7 @@ export default {
           if (data.articlePreviewDTOList.length) {
             this.current++;
             this.articleList.push(...data.articlePreviewDTOList);
-            this.articleList.push(...data.articlePreviewDTOList);
-            this.articleList.push(...data.articlePreviewDTOList);
+         
           }
         });
     },

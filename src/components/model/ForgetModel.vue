@@ -1,75 +1,74 @@
 <template>
-  <v-dialog v-model="forgetFlag" :fullscreen="isMobile" max-width="460">
-    <v-card class="login-container" style="border-radius:4px">
-      <v-icon class="float-right" @click="forgetFlag = false">
-        mdi-close
-      </v-icon>
-      <div class="login-wrapper">
-        <!-- 用户名 -->
-        <v-text-field
+  <el-dialog
+    :visible="forgetFlag"
+    :fullscreen="isMobile"
+    width="460px"
+    destroy-on-close
+    :before-close="handleClose"
+    top="15vh"
+  >
+    <el-form ref="form" :label-position="'top'" label-width="80px">
+      <el-form-item prop="email">
+        <el-input
           v-model="username"
-          label="邮箱号"
-          placeholder="请输入您的邮箱号"
+          placeholder="请输入邮箱号"
           clearable
-          @keyup.enter="forget"
+          @keyup.enter="login"
         />
-        <!-- 验证码 -->
-        <div class="mt-7 send-wrapper">
-          <v-text-field
-            maxlength="6"
-            v-model="code"
-            label="验证码"
-            placeholder="请输入6位验证码"
-            @keyup.enter="forget"
-          />
-          <v-btn :disabled="flag" text small @click="sendCode">
-            {{ codeMsg }}
-          </v-btn>
-        </div>
-        <!-- 密码 -->
-        <v-text-field
+      </el-form-item>
+      <el-form-item prop="email">
+        <el-input placeholder="请输入6位验证码" v-model="code">
+          <template slot="append">
+            <el-button text small :disabled="flag" @click="sendCode">
+              {{ codeMsg }}
+            </el-button>
+          </template>
+        </el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-input
           v-model="password"
-          class="mt-7"
           label="密码"
-          placeholder="请输入您的密码"
-          @keyup.enter="forget"
-          :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-          :type="show ? 'text' : 'password'"
-          @click:append="show = !show"
+          placeholder="请输入密码"
+          show-password
+          @keyup.enter="login"
         />
-        <!-- 按钮 -->
-        <v-btn
-          class="mt-7"
-          block
-          color="green"
-          style="color:#fff"
+      </el-form-item>
+      <div style="width: 100%">
+        <el-button
+          class="login-btn"
+          style="width: 100%"
+          type="success"
           @click="forget"
+          >确 定</el-button
         >
-          确定
-        </v-btn>
-        <!-- 登录 -->
-        <div class="mt-10 login-tip">
-          已有账号？<span @click="openLogin">登录</span>
-        </div>
       </div>
-    </v-card>
-  </v-dialog>
+      <!-- 注册和忘记密码 -->
+      <div class="btnlist">
+        <el-button @click="openLogin" type="text">已有账号？登录</el-button>
+      </div>
+    </el-form>
+  </el-dialog>
 </template>
 
 <script>
+import request from '@/utils/request';
 export default {
-  data: function() {
+  data: function () {
     return {
-      username: "",
-      code: "",
-      password: "",
+      username: '',
+      code: '',
+      password: '',
       flag: true,
-      codeMsg: "发送",
+      codeMsg: '发送',
       time: 60,
-      show: false
+      show: false,
     };
   },
   methods: {
+    handleClose() {
+      this.$store.state.forgetFlag = false;
+    },
     openLogin() {
       this.$store.state.forgetFlag = false;
       this.$store.state.loginFlag = true;
@@ -77,21 +76,21 @@ export default {
     sendCode() {
       const that = this;
       // eslint-disable-next-line no-undef
-      var captcha = new TencentCaptcha(this.config.TENCENT_CAPTCHA, function(
+      var captcha = new TencentCaptcha(this.config.TENCENT_CAPTCHA, function (
         res
       ) {
         if (res.ret === 0) {
           //发送邮件
           that.countDown();
-          that.axios
-            .get("/api/users/code", {
-              params: { username: that.username }
+          request
+            .get('/users/code', {
+              params: { username: that.username },
             })
-            .then(({ data }) => {
+            .then((data) => {
               if (data.flag) {
-                that.$toast({ type: "success", message: "发送成功" });
+                that.$message({ type: 'success', message: '发送成功' });
               } else {
-                that.$toast({ type: "error", message: data.message });
+                that.$message({ type: 'error', message: data.message });
               }
             });
         }
@@ -103,10 +102,10 @@ export default {
       this.flag = true;
       this.timer = setInterval(() => {
         this.time--;
-        this.codeMsg = this.time + "s";
+        this.codeMsg = this.time + 's';
         if (this.time <= 0) {
           clearInterval(this.timer);
-          this.codeMsg = "发送";
+          this.codeMsg = '发送';
           this.time = 60;
           this.flag = false;
         }
@@ -115,30 +114,30 @@ export default {
     forget() {
       var reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
       if (!reg.test(this.username)) {
-        this.$toast({ type: "error", message: "邮箱格式不正确" });
+        this.$message({ type: 'error', message: '邮箱格式不正确' });
         return false;
       }
-      if (this.code.trim().length != 6) {
-        this.$toast({ type: "error", message: "请输入6位验证码" });
+      if (this.code.trim().length !== 6) {
+        this.$message({ type: 'error', message: '请输入6位验证码' });
         return false;
       }
       if (this.password.trim().length < 6) {
-        this.$toast({ type: "error", message: "密码不能少于6位" });
+        this.$message({ type: 'error', message: '密码不能少于6位' });
         return false;
       }
       const user = {
         username: this.username,
         password: this.password,
-        code: this.code
+        code: this.code,
       };
-      this.axios.put("/api/users/password", user).then(({ data }) => {
+      request.put('/users/password', user).then((data) => {
         if (data.flag) {
-          this.$toast({ type: "success", message: "修改成功" });
+          this.$message({ type: 'success', message: '修改成功' });
         } else {
-          this.$toast({ type: "error", message: data.message });
+          this.$message({ type: 'error', message: data.message });
         }
       });
-    }
+    },
   },
   computed: {
     forgetFlag: {
@@ -147,7 +146,7 @@ export default {
       },
       get() {
         return this.$store.state.forgetFlag;
-      }
+      },
     },
     isMobile() {
       const clientWidth = document.documentElement.clientWidth;
@@ -155,7 +154,7 @@ export default {
         return false;
       }
       return true;
-    }
+    },
   },
   watch: {
     username(value) {
@@ -165,7 +164,7 @@ export default {
       } else {
         this.flag = true;
       }
-    }
-  }
+    },
+  },
 };
 </script>

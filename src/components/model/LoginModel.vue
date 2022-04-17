@@ -37,8 +37,8 @@
         </div>
         <!-- 注册和忘记密码 -->
         <div class="btnlist">
-          <el-button type="text">注册账号</el-button>
-          <el-button type="text">忘记密码?</el-button>
+          <el-button @click="openRegister" type="text">注册账号</el-button>
+          <el-button @click="openForget" type="text">忘记密码?</el-button>
         </div>
 
         <div v-if="socialLoginList.length > 0">
@@ -47,8 +47,8 @@
             <!-- 微博登录 -->
             <a
               v-if="showLogin('weibo')"
-              class="mr-3 iconfont iconweibo"
-              style="color: #e05244"
+              class="iconfont iconweibo"
+              style="color: #e05244; margin-right: 5px;"
               @click="weiboLogin"
             />
             <!-- qq登录 -->

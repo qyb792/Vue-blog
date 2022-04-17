@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import request from '@/utils/request'
 export default {
   data: function () {
     return {
@@ -69,9 +70,9 @@ export default {
             })
             .then(({ data }) => {
               if (data.flag) {
-                that.$toast({ type: 'success', message: data.message });
+                that.$message({ type: 'success', message: data.message });
               } else {
-                that.$toast({ type: 'error', message: data.message });
+                that.$message({ type: 'error', message: data.message });
               }
             });
         }
@@ -95,26 +96,26 @@ export default {
     saveUserEmail() {
       var reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
       if (!reg.test(this.email)) {
-        this.$toast({ type: 'error', message: '邮箱格式不正确' });
+        this.$message({ type: 'error', message: '邮箱格式不正确' });
         return false;
       }
       if (this.code.trim().length !== 6) {
-        this.$toast({ type: 'error', message: '请输入6位验证码' });
+        this.$message({ type: 'error', message: '请输入6位验证码' });
         return false;
       }
       const user = {
         email: this.email,
         code: this.code,
       };
-      this.axios.post('/api/users/email', user).then(({ data }) => {
+      request.post('/users/email', user).then(( data ) => {
         if (data.flag) {
           this.$store.commit('saveEmail', this.email);
           this.email = '';
           this.code = '';
           this.$store.commit('closeModel');
-          this.$toast({ type: 'success', message: data.message });
+          this.$message({ type: 'success', message: data.message });
         } else {
-          this.$toast({ type: 'error', message: data.message });
+          this.$message({ type: 'error', message: data.message });
         }
       });
     },

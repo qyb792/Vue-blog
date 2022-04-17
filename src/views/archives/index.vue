@@ -3,8 +3,8 @@
     <!-- banner -->
 
     <SmallBanner title="归档" :articleCover="cover" />
-    <main id="content-inner" class="layout_page">
-      <div class="archive" id="archive">
+    <main id="content-inner" class="layout">
+      <div class="archive" id="post">
         <timeline>
           <timeline-title> 目前共计{{ count }}篇文章，继续加油 </timeline-title>
           <timeline-item v-for="item of archiveList" :key="item.id">
@@ -97,17 +97,6 @@ export default {
   display: flex;
   justify-content: center;
   margin-top: 20px;
-}
-
-.archive {
-  -o-box-align: center;
-  align-items: center;
-  padding: 0;
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0 4px 8px 6px rgb(7 17 27 / 6%);
-  transition: all 0.3s;
-  padding: 50px 40px;
 }
 
 .time {

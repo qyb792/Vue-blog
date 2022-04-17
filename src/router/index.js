@@ -30,6 +30,32 @@ const routes = [
         name: 'articles',
         component: () => import('@/views/article'),
       },
+      {
+        path: '/albums',
+        component: () => import('@/views/album'),
+        meta: {
+          title: '相册',
+        },
+      },
+      {
+        path: '/albums/:albumId',
+        component: () => import('@/views/album/photo.vue'),
+      },
+
+      {
+        path: '/talks',
+        component: () => import('@/views/talk'),
+        meta: {
+          title: '说说',
+        },
+      },
+      {
+        path: '/talks/:talkId',
+        component: () => import('@/views/talk/talkInfo.vue'),
+        meta: {
+          title: '说说',
+        },
+      },
 
       {
         // 关于
@@ -54,7 +80,7 @@ const routes = [
       },
       {
         path: '/categories/:categoryId',
-        component: () => import('@/views/category/components/ArticleList.vue')
+        component: () => import('@/views/category/components/ArticleList.vue'),
       },
       {
         // 标签
@@ -65,10 +91,10 @@ const routes = [
       },
       {
         path: '/tags/:tagId',
-        component: () => import('@/views/category/components/ArticleList.vue')
+        component: () => import('@/views/category/components/ArticleList.vue'),
       },
       {
-        path: '/link',
+        path: '/links',
         component: () => import('@/views/link'),
         meta: { title: '友链' },
       },

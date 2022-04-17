@@ -177,7 +177,6 @@ export default {
 /* 首页头图 */
 .full-page {
   height: 100vh;
-  background-image: url('~@/assets/img/bg.jpg');
   background-attachment: fixed;
 }
 .article-banner {
@@ -212,4 +211,184 @@ export default {
 .mr-5 {
   margin-right: 20px;
 }
+
+/* 博客首页头图下方按钮的样式 */
+.full-page #scroll_down {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  cursor: pointer;
+}
+
+/* 首页下跳按钮动画绑定 */
+.scroll-down-effects {
+  -webkit-animation: scroll-down-effect 1.5s infinite;
+  -moz-animation: scroll-down-effect 1.5s infinite;
+  -o-animation: scroll-down-effect 1.5s infinite;
+  -ms-animation: scroll-down-effect 1.5s infinite;
+  animation: scroll-down-effect 1.5s infinite;
+}
+
+.full-page #scroll_down .scroll-down-effects {
+  position: relative;
+  width: 100%;
+  font-size: 1.5rem;
+  color: #eee;
+  text-align: center;
+  text-shadow: 0.1rem 0.1rem 0.2rem rgba(0, 0, 0, 0.15);
+  line-height: 1.5;
+}
+@keyframes scroll-down-effect {
+  0% {
+    top: 0;
+    opacity: 0.4;
+  }
+  50% {
+    top: -16px;
+    opacity: 1;
+    -ms-filter: none;
+    filter: none;
+  }
+  100% {
+    top: 0;
+    opacity: 0.4;
+  }
+}
+
+#site-info {
+  position: absolute;
+  top: 43%;
+  padding: 0 10px;
+  width: 100%;
+}
+
+/* 到达某个位置后上滑后顶部导航栏的css样式 */
+#page-header.visible {
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  transition: all 0.5s;
+  -webkit-transform: translate3d(0, 100%, 0);
+  -moz-transform: translate3d(0, 100%, 0);
+  -o-transform: translate3d(0, 100%, 0);
+  -ms-transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, 100%, 0);
+}
+
+#page-header.fixed {
+  position: fixed;
+  top: -60px;
+  z-index: 101;
+  background: rgba(255, 255, 255, 0.8);
+  -webkit-box-shadow: 0 5px 6px -5px rgba(133, 133, 133, 0.6);
+  box-shadow: 0 5px 6px -5px rgba(133, 133, 133, 0.6);
+  -webkit-transition: -webkit-transform 0.2s ease-in-out,
+    opacity 0.2s ease-in-out;
+  -moz-transition: -moz-transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  -o-transition: -o-transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  -ms-transition: -ms-transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+#page-header.fixed a,
+#page-header.fixed #site-name,
+#page-header.fixed .toggle-menu {
+  color: #4c4948;
+  text-shadow: none;
+}
+
+.pull_left {
+  float: left;
+}
+
+#page-header #site-name {
+  text-shadow: 0.1rem 0.1rem 0.2rem rgba(0, 0, 0, 0.15);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#page-header a {
+  color: #eee;
+}
+
+.pull_right {
+  float: right;
+}
+
+/* 非xxx选择器 */
+#page-header:not(.fixed) .menus {
+  padding-right: 0 !important;
+}
+
+/* 顶部导航条菜单样式 */
+#page-header .menus_items {
+  display: inline;
+}
+
+#page-header .toggle-menu {
+  display: none;
+  padding: 2px 0 0 6px;
+  vertical-align: top;
+}
+
+#page-header .menus_items .menus_item {
+  position: relative;
+  display: inline-block;
+  padding: 0 0 0 14px;
+}
+
+#page-header .site-page {
+  position: relative;
+  padding-bottom: 6px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#page-header .menus_items .menus_item a:after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  width: 0;
+  height: 3px;
+  background-color: #80c8f8;
+  content: '';
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+#page-header .menus_items .menus_item a:hover:after {
+  width: 100%;
+}
+
+/* 首页头图中间信息的css样式 */
+#site-info #site_title {
+  color: #eee;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
+  line-height: 1.5;
+  font-size: 40px;
+}
+
+.full-page #site-info #site_subtitle {
+  color: #eee;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
+  line-height: 1.5;
+  font-size: 24px;
+}
+
+.full-page #site-info #subtitle {
+  color: #eee;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
+  line-height: 1.5;
+  font-size: 24px;
+}
+
 </style>

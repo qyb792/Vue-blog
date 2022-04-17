@@ -3,9 +3,9 @@
     <!-- banner -->
     <SmallBanner title="标签" :articleCover="cover" />
     <!-- 分类内容 -->
-    <main id="content-inner" class="layout_page">
-      <div id="tags">
-        <div class="tag-cloud-title">标签 - 4</div>
+    <main id="content-inner" class="layout">
+      <div id="post">
+        <div class="tag-cloud-title">标签 - {{ count }}</div>
         <div class="tag-cloud">
           <router-link
             :style="{ 'font-size': Math.floor(Math.random() * 10) + 18 + 'px' }"
@@ -16,7 +16,7 @@
             {{ item.tagName }}
           </router-link>
         </div>
-        <hr />
+        <hr class="scissors-hr" />
       </div>
       <!-- 右侧菜单 -->
       <aside-content />
@@ -54,21 +54,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#tags {
-  -o-box-align: center;
-  align-items: center;
-  padding: 0;
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0 4px 8px 6px rgb(7 17 27 / 6%);
-  transition: all 0.3s;
-  padding: 50px 40px;
-
-  &:hover {
-    box-shadow: 0 4px 12px 12px rgb(7 17 27 / 15%);
-  }
-}
-
 .tag-cloud-title {
   line-height: 2;
   font-size: 36px;
@@ -92,105 +77,5 @@ export default {
       transform: scale(1.1);
     }
   }
-}
-</style>
-
-// 自适应
-<style lang="less" scoped>
-@media screen and (max-width: 900px) {
-  .layout {
-    flex-wrap: wrap;
-  }
-
-  #aside_content {
-    margin-top: 20px;
-    width: 100% !important;
-    .card-widget {
-      margin-left: 0 !important;
-      .card-content {
-        // .card-info-social-icons {
-        // }
-
-        .author-info-description {
-          font-size: 0.875rem;
-        }
-      }
-    }
-  }
-}
-
-@media screen and (min-width: 900px) {
-  #aside_content {
-    .card-widget {
-      margin-left: 0px !important;
-      // .card-content {
-      //   .card-info-social-icons {
-      //   }
-      // }
-    }
-  }
-}
-
-@media screen and (min-width: 992px) {
-  #aside_content {
-    .card-widget {
-      margin-left: 0px !important;
-      // .card-content {
-      //   .card-info-social-icons {
-      //   }
-      // }
-    }
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  #aside_content {
-    .card-widget {
-      margin-left: 0px !important;
-
-      .card-content {
-        padding: 20px 24px;
-        // .card-info-social-icons {
-        // }
-      }
-    }
-  }
-}
-
-hr {
-  position: relative;
-  margin: 20px auto;
-  width: calc(100% - 4px);
-  border: 2px dashed #a4d8fa;
-  box-sizing: content-box;
-  height: 0;
-  overflow: visible;
-}
-
-hr:before {
-  position: absolute;
-  top: -10px;
-  left: 5%;
-  z-index: 1;
-  color: #49b1f5;
-  content: '\f0c4';
-  font-style: normal;
-  font-variant: normal;
-  font-size: 20px;
-  line-height: 1;
-  -webkit-transition: all 1s ease-in-out;
-  -moz-transition: all 1s ease-in-out;
-  -o-transition: all 1s ease-in-out;
-  -ms-transition: all 1s ease-in-out;
-  transition: all 1s ease-in-out;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  font-weight: normal;
-  font-family: FontAwesome;
-}
-
-hr:hover:before {
-  /* 计算元素宽度减少20设置给left */
-  left: calc(95% - 20px);
 }
 </style>
