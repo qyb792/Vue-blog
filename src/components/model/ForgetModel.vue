@@ -90,7 +90,7 @@ export default {
               if (data.flag) {
                 that.$message({ type: 'success', message: '发送成功' });
               } else {
-                that.$message({ type: 'error', message: data.message });
+                that.$message({ type: 'error', message: data.data.message });
               }
             });
         }
@@ -134,7 +134,7 @@ export default {
         if (data.flag) {
           this.$message({ type: 'success', message: '修改成功' });
         } else {
-          this.$message({ type: 'error', message: data.message });
+          this.$message({ type: 'error', message: data.data.message });
         }
       });
     },

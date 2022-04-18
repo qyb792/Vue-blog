@@ -168,7 +168,7 @@ export default {
           this.$store.commit('logout');
           this.$message({ type: 'success', message: '注销成功' });
         } else {
-          this.$message({ type: 'error', message: data.message });
+          this.$message({ type: 'error', message: data.data.message });
         }
       });
     },

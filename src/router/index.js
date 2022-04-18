@@ -12,14 +12,14 @@ const routes = [
       {
         path: '/',
         name: 'home',
-        component: () => import('@/views/home'),
+        component: () => import('@/views/home/Home.vue'),
         meta: { title: '首页' },
       },
       {
         // 归档
         path: '/archives',
         name: 'archives',
-        component: () => import('@/views/archives'),
+        component: () => import('@/views/archives/Archives.vue'),
         meta: {
           title: '归档',
         },
@@ -28,30 +28,30 @@ const routes = [
         // 文章
         path: '/articles/:articleId',
         name: 'articles',
-        component: () => import('@/views/article'),
+        component: () => import('@/views/article/Article.vue'),
       },
       {
         path: '/albums',
-        component: () => import('@/views/album'),
+        component: () => import('@/views/album/Album.vue'),
         meta: {
           title: '相册',
         },
       },
       {
         path: '/albums/:albumId',
-        component: () => import('@/views/album/photo.vue'),
+        component: () => import('@/views/album/Photo.vue'),
       },
 
       {
         path: '/talks',
-        component: () => import('@/views/talk'),
+        component: () => import('@/views/talk/Talk.vue'),
         meta: {
           title: '说说',
         },
       },
       {
         path: '/talks/:talkId',
-        component: () => import('@/views/talk/talkInfo.vue'),
+        component: () => import('@/views/talk/TalkInfo.vue'),
         meta: {
           title: '说说',
         },
@@ -61,19 +61,19 @@ const routes = [
         // 关于
         path: '/about',
         name: 'about',
-        component: () => import('@/views/about'),
+        component: () => import('@/views/about/About.vue'),
         meta: { title: '关于我' },
       },
       {
         // 留言
         path: '/message',
         name: 'message',
-        component: () => import('@/views/message'),
+        component: () => import('@/views/message/Message.vue'),
         meta: { title: '留言' },
       },
       {
         path: '/categories',
-        component: () => import('@/views/category/'),
+        component: () => import('@/views/category/Category.vue'),
         meta: {
           title: '分类',
         },
@@ -86,7 +86,7 @@ const routes = [
         // 标签
         path: '/tags',
         name: 'tags',
-        component: () => import('@/views/tags'),
+        component: () => import('@/views/tags/Tags.vue'),
         meta: { title: '标签' },
       },
       {
@@ -95,9 +95,18 @@ const routes = [
       },
       {
         path: '/links',
-        component: () => import('@/views/link'),
+        component: () => import('@/views/link/Link.vue'),
         meta: { title: '友链' },
       },
+
+      {
+        path: '/user',
+        component: () => import('@/views/user/User.vue'),
+        meta: {
+          title: '个人中心',
+        },
+      },
+
       {
         path: '/zytqyb',
         component: () => import('@/components/OauthLogin.vue'),

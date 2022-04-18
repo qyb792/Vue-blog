@@ -11,8 +11,7 @@
         :src="value"
         :title="key"
         class="emoji"
-        width="24"
-        height="24"
+        :size="32"
       />
     </span>
   </div>
@@ -23,19 +22,19 @@ import EmojiList from '../assets/js/emoji';
 export default {
   props: {
     chooseEmoji: {
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
-  data: function() {
+  data: function () {
     return {
-      emojiList: EmojiList
+      emojiList: EmojiList,
     };
   },
   methods: {
     addEmoji(key) {
       this.$emit('addEmoji', key);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -49,6 +48,8 @@ export default {
 .emoji-item {
   cursor: pointer;
   display: inline-block;
+  width: 34px;
+  height: 34px;
 }
 .emoji-item:hover {
   transition: all 0.2s;

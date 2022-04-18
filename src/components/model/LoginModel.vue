@@ -147,7 +147,7 @@ export default {
             } else {
               that.$message({
                 type: 'error',
-                message: data.message,
+                message: data.data.message,
               });
             }
           });

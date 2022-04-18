@@ -21,49 +21,52 @@ export default {
     if (that.$route.path === '/oauth/login/qq') {
       // 拿到openId，accessToken传入后台
       if (QC.Login.check()) {
-        QC.Login.getMe(function(openId, accessToken) {
-          that.axios
-            .post('/api/users/oauth/qq', {
+        QC.Login.getMe(function (openId, accessToken) {
+          request
+            .post('/users/oauth/qq', {
               openId: openId,
-              accessToken: accessToken
+              accessToken: accessToken,
             })
-            .then(({ data }) => {
+            .then((data) => {
               if (data.flag) {
                 //保存登录状态
-                that.$store.commit('login', data.data);
+                that.$store.commit('login', data.data.data);
                 if (data.data.email === null) {
                   that.$message({
                     type: 'warnning',
-                    message: '请绑定邮箱以便及时收到回复'
+                    message: '请绑定邮箱以便及时收到回复',
                   });
                 } else {
-                  that.$message({ type: 'success', message: data.message });
+                  that.$message({
+                    type: 'success',
+                    message: data.data.message,
+                  });
                 }
               } else {
-                that.$message({ type: 'error', message: data.message });
+                that.$message({ type: 'error', message: data.data.message });
               }
             });
         });
       } else {
-        that.$message({ type: 'error', message: data.message });
+        that.$message({ type: 'error', message: data.data.message });
       }
     } else {
-      that.axios
-        .post('/api/users/oauth/weibo', { code: this.$route.query.code })
-        .then(({ data }) => {
+      request
+        .post('/users/oauth/weibo', { code: this.$route.query.code })
+        .then((data) => {
           if (data.flag) {
             //保存登录状态
-            that.$store.commit('login', data.data);
-            if (data.data.email === null) {
+            that.$store.commit('login', data.data.data);
+            if (data.data.data.email === null) {
               that.$message({
                 type: 'warnning',
-                message: '请绑定邮箱以便及时收到回复'
+                message: '请绑定邮箱以便及时收到回复',
               });
             } else {
-              that.$message({ type: 'success', message: data.message });
+              that.$message({ type: 'success', message: data.data.message });
             }
           } else {
-            that.$message({ type: 'error', message: data.message });
+            that.$message({ type: 'error', message: data.data.message });
           }
         });
     }
@@ -74,7 +77,7 @@ export default {
     } else {
       that.$router.push({ path: '/' });
     }
-  }
+  },
 };
 </script>
 

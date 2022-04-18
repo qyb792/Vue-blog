@@ -351,7 +351,7 @@ export default {
             this.$message({ type: 'success', message: '评论成功' });
           }
         } else {
-          this.$message({ type: 'error', message: data.message });
+          this.$message({ type: 'error', message: data.data.message });
         }
       });
     },

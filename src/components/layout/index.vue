@@ -17,6 +17,9 @@
     <!-- 找回密码模态框 -->
     <ForgetModel />
 
+    <!-- 绑定邮箱模态框 -->
+    <EmailModel></EmailModel>
+
     <SearchModel />
     <!-- 网站底部 -->
     <Footer v-if="isShow" />
@@ -33,6 +36,7 @@ import LoginModel from '@/components/model/LoginModel';
 import SearchModel from '@/components/model/SearchModel';
 import RegisterModel from '@/components/model/RegisterModel';
 import ForgetModel from '@/components/model/ForgetModel';
+import EmailModel from '@/components/model/EmailModel';
 
 export default {
   components: {
@@ -45,6 +49,7 @@ export default {
     SearchModel,
     RegisterModel,
     ForgetModel,
+    EmailModel,
   },
   data() {
     return {

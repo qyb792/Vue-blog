@@ -103,7 +103,7 @@ export default {
           this.$emit('reloadReply', this.index);
           this.$message({ type: 'success', message: '回复成功' });
         } else {
-          this.$message({ type: 'error', message: data.message });
+          this.$message({ type: 'error', message: data.data.message });
         }
       });
     },

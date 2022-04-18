@@ -106,18 +106,18 @@
 export default {
   props: {
     totalPage: {
-      type: Number
+      type: Number,
     },
     index: {
-      type: Number
+      type: Number,
     },
     commentId: {
-      type: Number
-    }
+      type: Number,
+    },
   },
-  data: function() {
+  data: function () {
     return {
-      current: 1
+      current: 1,
     };
   },
   methods: {
@@ -147,17 +147,17 @@ export default {
         this.index,
         this.commentId
       );
-    }
+    },
   },
   computed: {
     isActive() {
-      return function(i) {
+      return function (i) {
         if (i === this.current) {
           return 'active';
         }
       };
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -169,5 +169,21 @@ export default {
 .active {
   color: #00a1d6 !important;
   font-weight: bold;
+}
+
+.ml-1 {
+  margin-left: 4px !important;
+}
+
+.mr1 {
+  margin-right: 4px !important;
+}
+
+.mt-1 {
+  margin-top: 4px !important;
+}
+
+.mb-1 {
+  margin-bottom: 4px !important;
 }
 </style>

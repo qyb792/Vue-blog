@@ -1,48 +1,66 @@
 <template>
-  <v-dialog v-model="emailFlag" :fullscreen="isMobile" max-width="460">
-    <v-card class="login-container" style="border-radius: 4px">
-      <v-icon class="float-right" @click="emailFlag = false">
-        mdi-close
-      </v-icon>
-      <div class="login-wrapper">
-        <!-- 用户名 -->
-        <v-text-field
+  <el-dialog
+    :visible="emailFlag"
+    :fullscreen="isMobile"
+    width="460px"
+    destroy-on-close
+    :before-close="handleClose"
+    top="20vh"
+  >
+    <el-form
+      ref="form"
+      :label-position="'top'"
+      label-width="80px"
+      style="border-radius: 4px"
+    >
+      <el-form-item prop="email" label="邮箱号">
+        <el-input
           v-model="email"
-          label="邮箱号"
-          placeholder="请输入您的邮箱号"
+          placeholder="请输入邮箱号"
           clearable
           @keyup.enter="register"
         />
-        <!-- 验证码 -->
-        <div class="mt-7 send-wrapper">
-          <v-text-field
-            maxlength="6"
-            v-model="code"
-            label="验证码"
-            placeholder="请输入6位验证码"
-            @keyup.enter="register"
-          />
-          <v-btn text small :disabled="flag" @click="sendCode">
-            {{ codeMsg }}
-          </v-btn>
-        </div>
-        <!-- 按钮 -->
-        <v-btn
-          class="mt-7"
-          block
-          color="blue"
-          style="color: #fff"
-          @click="saveUserEmail"
+      </el-form-item>
+      <el-form-item prop="email" style="margin-top: 50px">
+        <el-input
+          placeholder="请输入6位验证码"
+          v-model="code"
+          @keyup.enter="register"
+          class="yzm"
         >
-          绑定
-        </v-btn>
+          <!-- <template slot="append">
+            <el-button text small :disabled="flag" @click="sendCode">
+              {{ codeMsg }}
+            </el-button>
+          </template> -->
+        </el-input>
+        <el-button
+          type="text"
+          small
+          :disabled="flag"
+          @click="sendCode"
+          style="width: 16%"
+        >
+          {{ codeMsg }}
+        </el-button>
+      </el-form-item>
+
+      <!-- 按钮 -->
+      <div style="width: 100%">
+        <el-button
+          class="login-btn"
+          style="width: 100%; margin-top: 40px"
+          type="primary"
+          @click="saveUserEmail"
+          >绑 定</el-button
+        >
       </div>
-    </v-card>
-  </v-dialog>
+    </el-form>
+  </el-dialog>
 </template>
 
 <script>
-import request from '@/utils/request'
+import request from '@/utils/request';
 export default {
   data: function () {
     return {
@@ -55,6 +73,9 @@ export default {
     };
   },
   methods: {
+    handleClose() {
+      this.$store.state.emailFlag = false;
+    },
     sendCode() {
       const that = this;
       // eslint-disable-next-line no-undef
@@ -64,15 +85,15 @@ export default {
         if (res.ret === 0) {
           //发送邮件
           that.countDown();
-          that.axios
-            .get('/api/users/code', {
+          request
+            .get('/users/code', {
               params: { username: that.email },
             })
-            .then(({ data }) => {
+            .then((data) => {
               if (data.flag) {
-                that.$message({ type: 'success', message: data.message });
+                that.$message({ type: 'success', message: data.data.message });
               } else {
-                that.$message({ type: 'error', message: data.message });
+                that.$message({ type: 'error', message: data.data.message });
               }
             });
         }
@@ -107,15 +128,15 @@ export default {
         email: this.email,
         code: this.code,
       };
-      request.post('/users/email', user).then(( data ) => {
+      request.post('/users/email', user).then((data) => {
         if (data.flag) {
           this.$store.commit('saveEmail', this.email);
           this.email = '';
           this.code = '';
           this.$store.commit('closeModel');
-          this.$message({ type: 'success', message: data.message });
+          this.$message({ type: 'success', message: data.data.message });
         } else {
-          this.$message({ type: 'error', message: data.message });
+          this.$message({ type: 'error', message: data.data.message });
         }
       });
     },
@@ -150,12 +171,18 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="less">
 @media (min-width: 760px) {
   .login-container {
     padding: 1rem;
     border-radius: 4px;
     height: 400px;
+  }
+}
+
+.el-form-item {
+  .yzm {
+    width: 83%;
   }
 }
 </style>
