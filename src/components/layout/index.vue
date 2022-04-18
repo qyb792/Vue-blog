@@ -7,8 +7,7 @@
     <app-main />
     <!-- 回到顶部等工具 -->
     <back-top />
-    <!-- 网站底部 -->
-    <Footer v-if="isShow" />
+
     <Aplayer v-if="blogInfo.websiteConfig.isMusicPlayer == 1" />
 
     <LoginModel />
@@ -19,6 +18,8 @@
     <ForgetModel />
 
     <SearchModel />
+    <!-- 网站底部 -->
+    <Footer v-if="isShow" />
   </div>
 </template>
 

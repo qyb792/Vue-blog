@@ -548,3 +548,12 @@
 [data-theme='dark'] .reward-all::after {
   border-top: 13px solid #2c2c2c !important;
 }
+
+[data-theme='dark'] #page {
+  background: #121212 !important;
+}
+
+[data-theme='dark'] .user-detail-wrapper {
+  color: hsla(0, 0%, 100%, 0.8);
+  text-decoration: none;
+}
