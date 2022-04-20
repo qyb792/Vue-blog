@@ -137,7 +137,6 @@ export default {
         // 获取当前元素的高度
         top: document.documentElement.clientHeight,
       });
-      // console.log(document.documentElement.clientHeight)
     },
   },
 };

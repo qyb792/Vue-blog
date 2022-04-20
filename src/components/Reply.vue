@@ -37,7 +37,8 @@
 
 <script>
 import Emoji from './Emoji';
-import EmojiList from '../assets/js/emoji';
+import { EmoticonList } from 'qyb-blog-emoticon';
+
 import request from '@/utils/request';
 export default {
   components: {
@@ -77,8 +78,8 @@ export default {
       this.commentContent = this.commentContent.replace(reg, function (str) {
         return (
           '<img src= \'' +
-          EmojiList[str] +
-          '\' width=\'24\'height=\'24\' style=\'margin: 0 1px;vertical-align: text-bottom\'/>'
+          EmoticonList[str] +
+          '\' width=\'50\'height=\'50\' style=\'margin: 0 1px;vertical-align: text-bottom\'/>'
         );
       });
       const path = this.$route.path;
@@ -119,6 +120,6 @@ export default {
   border: 1px solid #90939950;
   border-radius: 4px;
   padding: 10px;
-  margin: 0 0 10px;
+  margin: 10px 0 10px 10px;
 }
 </style>

@@ -43,7 +43,6 @@ export default {
   methods: {
     listPhotoAlbums() {
       request('/photos/albums').then(({ data }) => {
-        console.log(data);
         this.photoAlbumList = data;
       });
     },

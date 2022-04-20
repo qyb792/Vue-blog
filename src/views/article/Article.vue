@@ -773,7 +773,7 @@ export default {
         position: absolute;
         width: 100%;
         height: 100%;
-        opacity: 0.4;
+        opacity: 0.7;
         transition: all 0.6s;
         object-fit: cover;
       }
@@ -970,6 +970,10 @@ pre.hljs {
 </style>
 
 <style lang="less" scoped>
+.markdown-body {
+  color: #4c4948 !important;
+}
+
 @keyframes header-effect {
   0% {
     opacity: 0;

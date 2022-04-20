@@ -72,7 +72,6 @@ export default {
     check() {
       const flag = this.icon === 'iconyueliang';
       this.icon = flag ? 'icontaiyang' : 'iconyueliang';
-      // console.log(document.getElementsByTagName('html'))
       this.mode = flag ? 'dark' : 'light';
 
       document.documentElement.setAttribute('data-theme', this.mode);

@@ -31,7 +31,7 @@ import TopNavBar from '@/components/layout/component/TopNavBar';
 import AppMain from '@/components/layout/component/AppMain';
 import BackTop from '@/components/BackTop';
 import Footer from '@/components/layout/component/Footer';
-import Aplayer from '@/components/aplayer';
+import Aplayer from '@/components/Aplayer';
 import LoginModel from '@/components/model/LoginModel';
 import SearchModel from '@/components/model/SearchModel';
 import RegisterModel from '@/components/model/RegisterModel';

@@ -66,7 +66,6 @@ export default {
         if (i !== 99) ss += ',';
       }
       const result = await reqSong(ss);
-      // console.log(result);
       let sss = '';
       // 歌词列表
       let reqlyricList = [];
@@ -82,7 +81,6 @@ export default {
         const urlItem = result2.data.filter((item) => {
           return item.id === result.songs[i].id;
         });
-        // console.log(urlItem);
         return {
           name: result.songs[i].al.name,
           artist: result.songs[i].ar[0].name,
@@ -91,7 +89,6 @@ export default {
           lrc: reqlyricList[i].lrc.lyric,
         };
       });
-      // console.log(songList);
       this.songList = songList;
       this.isHide = true;
     },
@@ -99,20 +96,7 @@ export default {
   created() {
     this.getSongList();
   },
-  // methods: {
-  //   async getTheLlaylist() {
-  //     const result = await axios.get('https://music.bsat1314.cn/playlist/detail?id=2482023808')
-  //     const idList = result.data.playlist.trackIds.map(obj => { return obj.id })
-  //     const str = idList.toString()
-  //     console.log(str)
-  //     const musiclist = await axios.get('https://music.bsat1314.cn/song/url', {
-  //       params: {
-  //         id: str
-  //       }
-  //     })
-  //     console.log(musiclist)
-  //   }
-  // }
+
 };
 </script>
 

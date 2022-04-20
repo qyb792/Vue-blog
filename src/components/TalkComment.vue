@@ -201,7 +201,7 @@
 import Reply from './Reply';
 import Paging from './Paging';
 import Emoji from './Emoji';
-import EmojiList from '../assets/js/emoji';
+import { EmoticonList } from 'qyb-blog-emoticon';
 import request from '@/utils/request';
 export default {
   components: {
@@ -315,7 +315,7 @@ export default {
       this.commentContent = this.commentContent.replace(reg, function (str) {
         return (
           '<img src= \'' +
-          EmojiList[str] +
+          EmoticonList[str] +
           '\' width=\'22\'height=\'20\' style=\'padding: 0 1px\'/>'
         );
       });

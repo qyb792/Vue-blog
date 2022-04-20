@@ -1,5 +1,5 @@
 //当前这个模块：API进行统一管理
-import request from '@/components/aplayer/request';
+import request from '@/components/Aplayer/request';
 
 //获取封面banner资源 /banner?type=0
 export const reqBanner = () => {

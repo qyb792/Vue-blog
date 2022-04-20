@@ -7,14 +7,24 @@ import dayjs from 'dayjs';
 import VueImageSwipe from 'vue-image-swipe';
 import 'vue-image-swipe/dist/vue-image-swipe.css';
 import NProgress from 'nprogress';
-import 'nprogress/nprogress.css';
+
 import Share from 'vue-social-share';
-import './assets/css/vue-social-share/client.css';
-import 'highlight.js/styles/atom-one-dark.css';
+
+import mavonEditor from 'mavon-editor';
+Vue.use(mavonEditor);
 
 import config from './assets/js/config';
 
-import './styles/markdown.css';
+import 'mavon-editor/dist/css/index.css';
+import 'highlight.js/styles/atom-one-dark.css';
+import 'nprogress/nprogress.css';
+import './styles/markdown.less';
+import './assets/css/vue-social-share/client.css';
+import '@/styles/darkmode.less'; // 夜间模式css
+import '@/styles/index.less';
+import '@/assets/fonts/iconfont.css';
+import './plugins/element.js';
+
 
 // 引入自定义组件中的自定义从插件
 import Component from '@/components';
@@ -22,11 +32,6 @@ Vue.use(Component); // 注册自己的插件
 
 import { vueBaberrage } from 'vue-baberrage';
 
-import '@/styles/index.less';
-import '@/styles/darkmode.css'; // 夜间模式css
-import '@/assets/fonts/iconfont.css';
-import './plugins/element.js';
-import 'highlight.js/styles/atom-one-dark.css';
 import animated from 'animate.css';
 Vue.use(animated);
 Vue.use(vueBaberrage);

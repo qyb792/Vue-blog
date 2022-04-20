@@ -43,7 +43,6 @@ export default {
   },
   created() {
     getCategoryList().then(({ data }) => {
-      console.log(data);
       this.categoryList = data.recordList;
       this.count = data.count;
     });

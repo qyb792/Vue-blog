@@ -134,7 +134,6 @@ export default {
           param.append('username', that.username);
           param.append('password', that.password);
           request.post('/login', param).then((data) => {
-            console.log(data);
             if (data.flag) {
               that.username = '';
               that.password = '';

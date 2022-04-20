@@ -6,7 +6,9 @@
     <div class="layout">
       <!-- 博主头像 -->
       <div id="post">
-        <div style="width: 100%;margin: 10px 0;" class="is-center">
+        <Envelope></Envelope>
+
+        <div style="width: 100%; margin: 10px 0" class="is-center">
           <el-avatar :size="110">
             <img class="author-avatar" :src="avatar" />
           </el-avatar>
@@ -26,8 +28,12 @@
 
 <script>
 import Clipboard from 'clipboard';
+import Envelope from '@/components/Envelope';
 import request from '@/utils/request';
 export default {
+  components: {
+    Envelope,
+  },
   created() {
     this.getAboutContent();
   },
@@ -152,6 +158,4 @@ export default {
 }
 </style>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>

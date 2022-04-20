@@ -81,7 +81,6 @@ export default {
       const result = await getArchives(this.current);
       this.archiveList = result.data;
       this.count = result.count;
-      // console.log(result)
     },
     // 当页数改变边的时候
     handleCurrentChange(val) {
