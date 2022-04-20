@@ -87,11 +87,6 @@ a:hover {
   width: 100%;
   animation: main 1s;
 
-  & > .recent-posts {
-    width: 75%;
-    padding: 0 15px 0 0;
-  }
-
   & > #post {
     border-radius: 8px;
     background: #fff;
@@ -425,11 +420,6 @@ a:hover {
   .layout {
     flex-wrap: wrap;
 
-    & > .recent-posts {
-      width: 100%;
-      padding: 0;
-    }
-
     & > #post {
       width: 100%;
       margin-right: 0;
@@ -679,4 +669,10 @@ a:hover {
     /* 计算元素宽度减少20设置给left */
     left: calc(95% - 20px);
   }
+}
+
+pre.hljs code {
+  display: block !important;
+  margin: 0 10px !important;
+  overflow-x: auto !important;
 }

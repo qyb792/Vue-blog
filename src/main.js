@@ -10,12 +10,12 @@ import NProgress from 'nprogress';
 
 import Share from 'vue-social-share';
 
-import mavonEditor from 'mavon-editor';
-Vue.use(mavonEditor);
+// import mavonEditor from 'mavon-editor';
+// Vue.use(mavonEditor);
 
 import config from './assets/js/config';
 
-import 'mavon-editor/dist/css/index.css';
+// import 'mavon-editor/dist/css/index.css';
 import 'highlight.js/styles/atom-one-dark.css';
 import 'nprogress/nprogress.css';
 import './styles/markdown.less';
@@ -24,6 +24,7 @@ import '@/styles/darkmode.less'; // 夜间模式css
 import '@/styles/index.less';
 import '@/assets/fonts/iconfont.css';
 import './plugins/element.js';
+import '@/styles/code.less';
 
 
 // 引入自定义组件中的自定义从插件

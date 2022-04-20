@@ -16,14 +16,14 @@
         </el-avatar>
         <div style="width: 100%" class="ml-3">
           <div class="comment-input">
-            <!-- <textarea
+            <textarea
               class="comment-textarea"
               v-model="commentContent"
               placeholder="留下点什么吧..."
               auto-grow
               dense
-            /> -->
-            <div
+            />
+            <!-- <div
               class="mavonEditor"
               style="
                 width: 100%;
@@ -41,7 +41,7 @@
                 :shortCut="false"
                 boxShadowStyle=""
               />
-            </div>
+            </div> -->
           </div>
           <!-- 操作按钮 -->
           <div class="emoji-container">
@@ -254,7 +254,7 @@
           <!-- 评论内容 -->
           <div class="qyb-content">
             <span>
-              <p v-html="item.commentContent" class="comment-content"></p>
+              <p v-html="cs(item.commentContent)" class="comment-content"></p>
             </span>
           </div>
 
@@ -398,7 +398,7 @@
                   ：
                 </template>
                 <span>
-                  <p v-html="item.commentContent" class="comment-content"></p>
+                  <p v-html="reply.commentContent" class="comment-content"></p>
                 </span>
               </div>
             </div>
@@ -446,7 +446,11 @@
       </div>
       <!-- 加载按钮 -->
       <div class="load-wrapper">
-        <el-button v-if="count > commentList.length" @click="listComments">
+        <el-button
+          style="width: 100%"
+          v-if="count > commentList.length"
+          @click="listComments"
+        >
           加载更多...
         </el-button>
       </div>
@@ -476,6 +480,12 @@ export default {
   },
   created() {
     this.listComments();
+  },
+  mounted() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'instant',
+    });
   },
   data: function () {
     return {
@@ -529,6 +539,7 @@ export default {
         this.commentList[index].replyDTOList = data;
       });
     },
+
     listComments() {
       //查看评论
       const path = this.$route.path;
@@ -550,6 +561,7 @@ export default {
       }).then(({ data }) => {
         if (this.current === 1) {
           this.commentList = data.recordList;
+          // this.markdownToHtml(this.commentList[0]);
         } else {
           this.commentList.push(...data.recordList);
         }
@@ -572,11 +584,11 @@ export default {
       //解析表情
       var reg = /\[.+?\]/g;
       this.commentContent = this.commentContent.replace(reg, function (str) {
-        return (
-          '<img src= \'' +
-          EmoticonList[str] +
-          '\' width=\'50\'height=\'50\' style=\'margin: 0 1px;vertical-align: text-bottom\'/>'
-        );
+        return `![${EmoticonList[str]}](${EmoticonList[str]})`;
+
+        // '<img src= \'' +
+        // EmoticonList[str] +
+        // '\' width=\'50\'height=\'50\' style=\'margin: 0 1px;vertical-align: text-bottom\'/>'
       });
       //发送请求
       const path = this.$route.path;
@@ -650,11 +662,73 @@ export default {
         this.commentList[index].replyDTOList = data.data;
       });
     },
+    markdownToHtml(commentContent) {
+      const MarkdownIt = require('markdown-it');
+      const hljs = require('highlight.js');
+      const md = new MarkdownIt({
+        html: true,
+        linkify: true,
+        typographer: true,
+        breaks: true,
+        highlight: function (str, lang) {
+          // 当前时间加随机数生成唯一的id标识
+          var d = new Date().getTime();
+          if (
+            window.performance &&
+            typeof window.performance.now === 'function'
+          ) {
+            d += performance.now();
+          }
+          const codeIndex = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
+            /[xy]/g,
+            function (c) {
+              var r = (d + Math.random() * 16) % 16 | 0;
+              d = Math.floor(d / 16);
+              return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+            }
+          );
+          // 复制功能主要使用的是 clipboard.js
+          let html = `<button class="copy-btn iconfont iconfuzhi" type="button" data-clipboard-action="copy" data-clipboard-target="#copy${codeIndex}"></button>`;
+          const linesLength = str.split(/\n/).length - 1;
+          // 生成行号
+          let linesNum = '<span aria-hidden="true" class="line-numbers-rows">';
+          for (let index = 0; index < linesLength; index++) {
+            linesNum = linesNum + '<span></span>';
+          }
+          linesNum += '</span>';
+          if (lang === null) {
+            lang = 'java';
+          }
+          if (lang && hljs.getLanguage(lang)) {
+            // highlight.js 高亮代码
+            const preCode = hljs.highlight(lang, str, true).value;
+            html = html + preCode;
+            if (linesLength) {
+              html += '<b class="name">' + lang + '</b>';
+            }
+            // 将代码包裹在 textarea 中，由于防止textarea渲染出现问题，这里将 "<" 用 "<" 代替，不影响复制功能
+            return `<pre class="hljs"><code>${html} <button>55998</button></code>${linesNum}</pre><textarea style="position: absolute;top: -9999px;left: -9999px;z-index: -9999;" id="copy${codeIndex}">${str.replace(
+              /<\/textarea>/g,
+              '</textarea>'
+            )}</textarea>`;
+          }
+        },
+      });
+      // 将markdown替换为html标签
+      commentContent = md.render(commentContent);
+      return commentContent;
+    },
   },
   computed: {
     isLike() {
       return function (count) {
         return parseInt(count) > 0 ? false : true;
+      };
+    },
+    cs() {
+      return function (commentContent) {
+        const ss = this.markdownToHtml(commentContent);
+        return ss;
       };
     },
   },
@@ -690,7 +764,7 @@ export default {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      max-width: 100%;
+      max-width: 70%;
       width: fit-content;
       margin-left: 10px;
 
@@ -758,11 +832,12 @@ export default {
       border-radius: 10px;
       font-size: 16px !important;
       width: fit-content;
-      max-width: 100%;
+      max-width: 70%;
       position: relative !important;
       overflow: visible !important;
       max-height: none !important;
       margin-top: 0.5rem;
+
       &::before {
         content: '';
         width: 0;
@@ -819,7 +894,6 @@ export default {
   margin: 0 0 10px;
 }
 
-
 .count {
   padding: 5px;
   line-height: 1.75;
@@ -851,10 +925,10 @@ export default {
       flex-direction: row;
       // justify-content: space-between;
       flex-direction: row-reverse;
-      max-width: 100%;
+      max-width: 70%;
       width: fit-content;
-      margin-left: 10px;
-      width: 100%;
+      margin-left: 30%;
+      width: 70%;
 
       .qyb-meta {
         small {
@@ -925,7 +999,9 @@ export default {
       overflow: visible !important;
       max-height: none !important;
       margin-top: 0.5rem;
-      width: 100%;
+      width: 70%;
+      margin-left: 30%;
+
       &::before {
         content: '';
         width: 0;
@@ -942,7 +1018,6 @@ export default {
   }
 }
 </style>
-
 
 <style lang="less" scoped>
 .v-note-wrapper {

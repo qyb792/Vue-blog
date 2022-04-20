@@ -41,7 +41,7 @@
             href="https://cn.vuejs.org/"
             title="博客框架为 Vue"
             ><img
-              src="https://img.shields.io/badge/Frame-Vue-blue?style=flat&logo=Vue"
+              src="https://bsat1314.cn/MdDocument/vue.svg"
               title="博客框架为 Vue"
               alt="Vue"
           /></a>

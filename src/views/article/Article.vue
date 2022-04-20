@@ -520,7 +520,7 @@ export default {
               html += '<b class="name">' + lang + '</b>';
             }
             // 将代码包裹在 textarea 中，由于防止textarea渲染出现问题，这里将 "<" 用 "<" 代替，不影响复制功能
-            return `<pre class="hljs"><code>${html}</code>${linesNum}</pre><textarea style="position: absolute;top: -9999px;left: -9999px;z-index: -9999;" id="copy${codeIndex}">${str.replace(
+            return `<pre class="hljs"> <div class="hljs-tools">1</div> <code>${html}</code>${linesNum}</pre><textarea style="position: absolute;top: -9999px;left: -9999px;z-index: -9999;" id="copy${codeIndex}">${str.replace(
               /<\/textarea>/g,
               '</textarea>'
             )}</textarea>`;
