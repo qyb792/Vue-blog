@@ -56,7 +56,7 @@ export default {
           // 添加代码复制功能
           this.clipboard = new Clipboard('.copy-btn');
           this.clipboard.on('success', () => {
-            this.$toast({ type: 'success', message: '复制成功' });
+            this.$message({ type: 'success', message: '复制成功' });
           });
           // 添加图片预览功能
           const imgList = this.$refs.about.getElementsByTagName('img');

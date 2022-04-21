@@ -8,8 +8,6 @@
     <!-- 回到顶部等工具 -->
     <back-top />
 
-    <Aplayer v-if="blogInfo.websiteConfig.isMusicPlayer == 1" />
-
     <LoginModel />
 
     <!-- 注册模态框 -->
@@ -19,6 +17,11 @@
 
     <!-- 绑定邮箱模态框 -->
     <EmailModel></EmailModel>
+
+    <!-- 聊天室 -->
+    <ChatRoom v-if="blogInfo.websiteConfig.isChatRoom == 1"></ChatRoom>
+
+    <Aplayer v-if="blogInfo.websiteConfig.isMusicPlayer == 1" />
 
     <SearchModel />
     <!-- 网站底部 -->
@@ -37,7 +40,7 @@ import SearchModel from '@/components/model/SearchModel';
 import RegisterModel from '@/components/model/RegisterModel';
 import ForgetModel from '@/components/model/ForgetModel';
 import EmailModel from '@/components/model/EmailModel';
-
+import ChatRoom from '@/components/ChatRoom';
 export default {
   components: {
     TopNavBar,
@@ -50,6 +53,7 @@ export default {
     RegisterModel,
     ForgetModel,
     EmailModel,
+    ChatRoom,
   },
   data() {
     return {

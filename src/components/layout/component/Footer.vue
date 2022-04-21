@@ -73,7 +73,7 @@
           ><a
             style="margin-inline: 5px"
             target="_blank"
-            href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+            href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
             ><img
               src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris"
               alt="img"

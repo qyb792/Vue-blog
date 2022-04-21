@@ -11,7 +11,7 @@
 </template>
 
 <script>
-/* eslint-disable no-undef */
+import request from '@/utils/request';
 export default {
   created() {
     const that = this;
@@ -20,7 +20,9 @@ export default {
     //通过路径判断是微博登录还是qq登录
     if (that.$route.path === '/oauth/login/qq') {
       // 拿到openId，accessToken传入后台
+      // eslint-disable-next-line no-undef
       if (QC.Login.check()) {
+        // eslint-disable-next-line no-undef
         QC.Login.getMe(function (openId, accessToken) {
           request
             .post('/users/oauth/qq', {
@@ -30,43 +32,43 @@ export default {
             .then((data) => {
               if (data.flag) {
                 //保存登录状态
-                that.$store.commit('login', data.data.data);
+                console.log(data);
+                that.$store.commit('login', data.data);
                 if (data.data.email === null) {
                   that.$message({
                     type: 'warnning',
                     message: '请绑定邮箱以便及时收到回复',
                   });
                 } else {
-                  that.$message({
-                    type: 'success',
-                    message: data.data.message,
-                  });
+                  that.$message({ type: 'success', message: data.message });
                 }
               } else {
-                that.$message({ type: 'error', message: data.data.message });
+                that.$message({ type: 'error', message: data.message });
               }
             });
         });
       } else {
-        that.$message({ type: 'error', message: data.data.message });
+        // eslint-disable-next-line no-undef
+        that.$message({ type: 'error', message: data.message });
       }
     } else {
       request
         .post('/users/oauth/weibo', { code: this.$route.query.code })
         .then((data) => {
+
           if (data.flag) {
             //保存登录状态
-            that.$store.commit('login', data.data.data);
-            if (data.data.data.email === null) {
+            that.$store.commit('login', data.data);
+            if (data.data.email === null) {
               that.$message({
                 type: 'warnning',
                 message: '请绑定邮箱以便及时收到回复',
               });
             } else {
-              that.$message({ type: 'success', message: data.data.message });
+              that.$message({ type: 'success', message: data.message });
             }
           } else {
-            that.$message({ type: 'error', message: data.data.message });
+            that.$message({ type: 'error', message: data.message });
           }
         });
     }

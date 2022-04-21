@@ -108,7 +108,7 @@ const routes = [
       },
 
       {
-        path: '/zytqyb',
+        path: '/oauth/login/qq',
         component: () => import('@/components/OauthLogin.vue'),
       },
       {
