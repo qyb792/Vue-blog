@@ -17,7 +17,7 @@ module.exports = {
         }
       },
       '/music': {
-        target: 'http://119.91.135.135:7979/',
+        target: 'https://music.bsat1314.cn/',
         changeOrigin: true,
         pathRewrite: {
           '^/music': ''

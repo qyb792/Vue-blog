@@ -87,6 +87,11 @@ a:hover {
   width: 100%;
   animation: main 1s;
 
+  & > .recent-posts {
+    width: 70%;
+    margin-right: 20px;
+  }
+
   & > #post {
     border-radius: 8px;
     background: #fff;
@@ -429,6 +434,11 @@ a:hover {
       margin: 20px 0 0;
       width: 100%;
     }
+
+    & > .recent-posts {
+      width: 100%;
+      margin-right: 0;
+    }
   }
 }
 
@@ -669,6 +679,16 @@ a:hover {
     /* 计算元素宽度减少20设置给left */
     left: calc(95% - 20px);
   }
+}
+
+pre.hljs code {
+  display: block !important;
+  margin: 0 10px !important;
+  overflow-x: auto !important;
+}
+
+.hljs {
+  background: #282c34 !important;
 }
 
 pre.hljs code {

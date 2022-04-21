@@ -16,15 +16,19 @@ import Share from 'vue-social-share';
 import config from './assets/js/config';
 
 // import 'mavon-editor/dist/css/index.css';
-import 'highlight.js/styles/atom-one-dark.css';
-import 'nprogress/nprogress.css';
-import './styles/markdown.less';
-import './assets/css/vue-social-share/client.css';
-import '@/styles/darkmode.less'; // 夜间模式css
 import '@/styles/index.less';
 import '@/assets/fonts/iconfont.css';
+import './styles/markdown.css';
+import './assets/css/vue-social-share/client.css';
+import '@/styles/darkmode.less'; // 夜间模式css
+
 import './plugins/element.js';
 import '@/styles/code.less';
+import 'highlight.js/styles/atom-one-dark.css';
+import 'nprogress/nprogress.css';
+import animated from 'animate.css';
+
+
 
 
 // 引入自定义组件中的自定义从插件
@@ -33,7 +37,6 @@ Vue.use(Component); // 注册自己的插件
 
 import { vueBaberrage } from 'vue-baberrage';
 
-import animated from 'animate.css';
 Vue.use(animated);
 Vue.use(vueBaberrage);
 
