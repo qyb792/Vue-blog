@@ -98,20 +98,21 @@
         </div>
         <div class="emoji-border" v-show="isEmoji" />
         <!-- 切换输入方式 -->
-        <v-icon
+
+        <i
+          class="el-icon-microphone"
           v-show="!isVoice"
           @click="isVoice = !isVoice"
-          style="margin-right: 8px"
+          style="margin-right: 8px;font-size: 1.5rem"
         >
-          mdi-microphone
-        </v-icon>
-        <v-icon
+        </i>
+        <i
+          class="el-icon-chat-line-square"
           v-show="isVoice"
           @click="isVoice = !isVoice"
-          style="margin-right: 8px"
+          style="margin-right: 8px; font-size: 1.5rem"
         >
-          mdi-keyboard
-        </v-icon>
+        </i>
         <!-- 文字输入 -->
         <textarea
           v-show="!isVoice"
@@ -157,7 +158,7 @@
 <script>
 import Recorderx, { ENCODE_TYPE } from 'recorderx';
 import Emoji from './Emoji';
-import { EmoticonList } from 'qyb-blog-emoticon'
+import { EmoticonList } from 'qyb-blog-emoticon';
 export default {
   components: {
     Emoji,

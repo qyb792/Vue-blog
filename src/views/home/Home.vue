@@ -57,7 +57,7 @@
 
 <script>
 import EasyTyper from 'easy-typer-js';
-import HomeArticleItem from './components/HomeArticleItem';
+import HomeArticleItem from './components/HomeArticleItem1';
 import request from '@/utils/request';
 import Swiper from '@/components/Swiper';
 export default {

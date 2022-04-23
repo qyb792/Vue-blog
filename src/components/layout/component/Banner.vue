@@ -63,10 +63,10 @@ export default {
         isEnd: false,
         speed: 300,
         singleBack: false,
-        sleep: 0,
-        type: 'rollback',
+        sleep: 1000,
+        type: 'normal',
         backSpeed: 40,
-        sentencePause: true,
+        sentencePause: false,
       },
       articleList: [],
       talkList: [],
@@ -102,35 +102,41 @@ export default {
       return this.$store.state.blogInfo;
     },
   },
-
-  created() {
+  mounted() {
     this.init();
+  },
+  created() {
     this.listHomeTalks();
     this.timer = setInterval(this.runTime, 1000);
   },
   methods: {
     // 初始化
     init() {
-      document.title = this.blogInfo.websiteConfig.websiteName;
+      this.fetchData();
+    },
+    fetchData() {
       // 一言Api进行打字机循环输出效果
-      fetch('https://v1.hitokoto.cn?c=i')
+      fetch('https://v1.hitokoto.cn')
         .then((res) => {
           return res.json();
         })
         .then(({ hitokoto }) => {
           this.initTyped(hitokoto);
+        })
+        .catch((err) => {
+          console.error(err);
         });
+    },
+    initTyped(input, fn, hooks) {
+      const obj = this.obj;
+      new EasyTyper(obj, input, fn, hooks);
     },
     listHomeTalks() {
       request('/home/talks').then(({ data }) => {
         this.talkList = data;
       });
     },
-    initTyped(input, fn, hooks) {
-      const obj = this.obj;
-      // eslint-disable-next-line no-unused-vars
-      const typed = new EasyTyper(obj, input, fn, hooks);
-    },
+
     scrollDown() {
       window.scrollTo({
         behavior: 'smooth',
@@ -141,6 +147,64 @@ export default {
   },
 };
 </script>
+
+<style lang="less" scoped>
+.typed-cursor {
+  margin-left: 10px;
+  opacity: 1;
+  -webkit-animation: blink 0.7s infinite;
+  -moz-animation: blink 0.7s infinite;
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+</style>
 
 <style lang="less" scoped>
 @media (max-width: 759px) {
@@ -389,5 +453,4 @@ export default {
   line-height: 1.5;
   font-size: 24px;
 }
-
 </style>

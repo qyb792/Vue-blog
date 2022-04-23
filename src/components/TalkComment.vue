@@ -66,9 +66,7 @@
             <a v-else :href="item.webSite" target="_blank">
               {{ item.nickname }}
             </a>
-            <!-- <v-icon size="20" color="#ffa51e" v-if="item.userId === 1">
-              mdi-check-decagram
-            </v-icon> -->
+      
           </div>
           <!-- 信息 -->
           <div class="comment-info">

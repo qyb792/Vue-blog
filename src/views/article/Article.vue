@@ -129,7 +129,8 @@
           v-if="article.recommendArticleList.length"
         >
           <div class="recommend-title">
-            <v-icon size="20" color="#4c4948">mdi-thumb-up</v-icon> 相关推荐
+            <i size="20" color="#4c4948" class="iconfont icondianzan"></i
+            >相关推荐
           </div>
           <div class="recommend-list">
             <div

@@ -8,8 +8,8 @@
         @click="check"
       />
     </div>
-    <div id="rightside-config-show" @click="show">
-      <div id="rightside_config" title="设置">
+    <div id="rightside-config-show" >
+      <div id="rightside_config" title="设置" @click="show">
         <i class="iconfont iconshezhi setting" />
       </div>
       <i
@@ -94,7 +94,7 @@ export default {
   z-index: 4;
   position: fixed;
   right: -38px;
-  bottom: 40px;
+  bottom: 80px;
   transition: all 0.5s;
 }
 .rightside-config-hide {
