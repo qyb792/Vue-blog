@@ -1,5 +1,5 @@
 <template>
-  <div id="nav" class="full-page" :style="cover">
+  <div id="nav" class="full-page" :style="bannerImg ? cover : ''">
     <!-- 头图中间文字 -->
     <div id="site-info">
       <div id="site_title" class="zoomIn animated">
@@ -80,7 +80,6 @@ export default {
     },
     bannerImg: {
       type: String,
-      required: true,
     },
   },
   computed: {

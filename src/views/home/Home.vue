@@ -1,9 +1,17 @@
 <template>
   <div>
     <!-- banner -->
-    <banner
+    <div
+      id="web_bg"
+      :style="cover"
+    ></div>
+
+    <!-- <banner
       :banner-title="blogInfo.websiteConfig.websiteName"
       :banner-img="blogInfo.websiteConfig.websiteName"
+    /> -->
+    <banner
+      :banner-title="blogInfo.websiteConfig.websiteName"
     />
     <main id="content-inner" class="layout">
       <div class="recent-posts">
@@ -79,6 +87,15 @@ export default {
   computed: {
     blogInfo() {
       return this.$store.state.blogInfo;
+    },
+    cover() {
+      let cover = '';
+      this.$store.state.blogInfo.pageList.forEach((item) => {
+        if (item.pageLabel === 'home') {
+          cover = item.pageCover;
+        }
+      });
+      return 'background: url(' + cover + ') center center / cover no-repeat';
     },
   },
   methods: {
