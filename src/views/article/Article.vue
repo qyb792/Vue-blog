@@ -140,12 +140,12 @@
             >
               <router-link :to="'/articles/' + item.id">
                 <img class="recommend-cover" :src="item.articleCover" />
-                <div class="recommend-info">
+                <div class="content">
                   <div class="recommend-date">
                     <i class="iconfont iconrili" />
                     {{ item.createTime | date }}
                   </div>
-                  <div>{{ item.articleTitle }}</div>
+                  <div class="title">{{ item.articleTitle }}</div>
                 </div>
               </router-link>
             </div>
@@ -580,6 +580,15 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.recommend-title {
+  i {
+    text-align: center;
+    width: 1.25rem;
+    display: inline-block;
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+  }
+}
 .layout {
   #post {
     .aritcle-copyright {
@@ -971,6 +980,68 @@ pre.hljs {
 </style>
 
 <style lang="less" scoped>
+.recommend-list {
+  & > div {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    margin: 3px;
+    width: calc(33.333% - 6px);
+    height: 200px;
+    background: #000;
+    vertical-align: bottom;
+
+    :hover img {
+      opacity: 0.8;
+      -webkit-transform: scale(1.1);
+      -moz-transform: scale(1.1);
+      -o-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+      transform: scale(1.1);
+    }
+
+    & > a {
+      background-color: transparent;
+      transition: all 0.2s;
+      overflow-wrap: break-word;
+
+      .content {
+        position: absolute;
+        top: 50%;
+        padding: 0 20px;
+        width: 100%;
+        -webkit-transform: translate(0, -50%);
+        -moz-transform: translate(0, -50%);
+        -o-transform: translate(0, -50%);
+        -ms-transform: translate(0, -50%);
+        transform: translate(0, -50%);
+        text-align: center;
+        .recommend-date {
+          color: var(--light-grey);
+          font-size: 90%;
+        }
+        .title {
+          color: var(--white);
+          -webkit-line-clamp: 2;
+        }
+      }
+
+      & > img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0.4;
+        -webkit-transition: all 0.6s, filter 375ms ease-in 0.2s;
+        -moz-transition: all 0.6s, filter 375ms ease-in 0.2s;
+        -o-transition: all 0.6s, filter 375ms ease-in 0.2s;
+        -ms-transition: all 0.6s, filter 375ms ease-in 0.2s;
+        transition: all 0.6s, filter 375ms ease-in 0.2s;
+        object-fit: cover;
+      }
+    }
+  }
+}
+
 .markdown-body {
   color: #4c4948 !important;
 }

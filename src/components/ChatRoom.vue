@@ -526,7 +526,7 @@ export default {
   border-radius: 100px !important;
   position: fixed;
   bottom: 15px;
-  right: 5px;
+  right: 40px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16) !important;
   cursor: pointer;
   height: 60px !important;
